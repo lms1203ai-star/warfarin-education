@@ -1,0 +1,3051 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="text-[16px]">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>亞東紀念醫院 藥學部｜Warfarin（可化凝錠）動態衛教手冊</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ==========================================================================
+       無印良品風格（MUJI-Inspired）＋ 臨床雙色重點設計系統變數
+       ========================================================================== */
+    :root {
+      --bg-warm: #F7F6F2;          /* 無印暖米白底色 */
+      --bg-sidebar: #EFECE6;       /* 側邊欄淡亞麻灰 */
+      --bg-card: #FFFFFF;          /* 純白內容卡片 */
+      --border-hairline: #E2E0D8;  /* 1px 細髮絲分隔線 */
+      --text-primary: #2B2B2B;     /* 深炭黑主文字 */
+      --text-secondary: #64748B;   /* 沉穩石板灰輔助字 */
+      --muji-burgundy: #7F1D1D;    /* 無印經典酒紅主色 */
+      --muji-burgundy-hover: #651515;
+      --clinical-teal: #007A87;    /* 臨床照護青（安全達標／可補服） */
+      --clinical-teal-bg: #E6F4F5;
+      --alert-crimson: #BE123C;    /* 臨床警示紅（出血血栓警訊／不可補雙倍） */
+      --alert-crimson-bg: #FFF1F2;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-warm);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      transition: font-size 0.2s ease;
+    }
+
+    /* 平滑捲動與自訂極簡捲軸 */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-warm);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CFCBC0;
+      border-radius: 3px;
+    }
+
+    /* 手機版手動模擬外框樣式 */
+    .mobile-preview-frame {
+      max-width: 430px !important;
+      margin: 1.25rem auto !important;
+      border: 1px solid #CFCBC0;
+      border-radius: 20px;
+      overflow: hidden;
+      background-color: var(--bg-warm);
+      box-shadow: 0 10px 30px rgba(43, 43, 43, 0.08);
+      position: relative;
+    }
+
+    /* 手機版模擬視圖強制單欄滿版排版，避免桌機斷點造成多欄擠壓 */
+    .mobile-preview-frame .mobile-single-col {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+    }
+    .mobile-preview-frame .mobile-single-col > * {
+      grid-column: 1 / -1 !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .mobile-preview-frame .mobile-stack-col {
+      flex-direction: column !important;
+      align-items: stretch !important;
+    }
+    .mobile-preview-frame .mobile-stack-col > * {
+      width: 100% !important;
+      flex: none !important;
+    }
+    .mobile-preview-frame .mobile-header-compact {
+      padding: 0.65rem 0.85rem !important;
+    }
+    .mobile-preview-frame .mobile-header-tools {
+      width: 100%;
+      justify-content: flex-start;
+      gap: 0.35rem !important;
+    }
+    .mobile-preview-frame .mobile-main-pad {
+      padding: 0.85rem 0.85rem 5.25rem 0.85rem !important;
+    }
+
+    /* 真實手機螢幕寬度 (<768px) 同樣自動啟用底部導覽留白與直向堆疊 */
+    @media (max-width: 767px) {
+      .mobile-main-pad {
+        padding-bottom: 5.25rem !important;
+      }
+      .mobile-stack-col {
+        flex-direction: column !important;
+        align-items: stretch !important;
+      }
+      .mobile-stack-col > * {
+        width: 100% !important;
+        flex: none !important;
+      }
+    }
+
+    /* 扁平化圖示統一筆觸 */
+    .flat-icon {
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* 列印專用樣式：一鍵列印隨身用藥紀錄卡時隱藏導覽列與側邊欄 */
+    @media print {
+      body {
+        background: #FFFFFF !important;
+      }
+      header,
+      #left-sidebar,
+      #hero-overview-banner,
+      footer,
+      .no-print {
+        display: none !important;
+      }
+      main {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      #printable-med-card {
+        border: 2px solid #2B2B2B !important;
+        box-shadow: none !important;
+      }
+    }
+
+    /* 分頁切換淡入過渡 */
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .tab-panel-animate {
+      animation: fadeSlideIn 0.22s ease-out forwards;
+    }
+
+    /* Phase 3 動態時間軸與藥錠處置動畫 */
+    @keyframes pillPulseTeal {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 122, 135, 0.35);
+      }
+      50% {
+        transform: scale(1.06);
+        box-shadow: 0 0 0 8px rgba(0, 122, 135, 0);
+      }
+    }
+    @keyframes pillWarnCrimson {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      25% {
+        transform: translateX(-3px);
+      }
+      75% {
+        transform: translateX(3px);
+      }
+    }
+    @keyframes pinDrop {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -8px);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+    .animate-pill-teal {
+      animation: pillPulseTeal 2s infinite ease-in-out;
+    }
+    .animate-pill-crimson {
+      animation: pillWarnCrimson 0.45s ease-in-out 2;
+    }
+    .animate-pin-drop {
+      animation: pinDrop 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- ==========================================================================
+       自訂無印風格訊息提示框（取代 alert / confirm）
+       ========================================================================== -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- 衛教影片與完整衛教本連結互動彈窗 -->
+  <div id="resource-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 p-4" role="dialog" aria-modal="true">
+    <div class="bg-white border border-[#E2E0D8] rounded-xl max-w-lg w-full p-6">
+      <div class="flex items-center justify-between pb-3 border-b border-[#E2E0D8]">
+        <div class="flex items-center gap-2.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#7F1D1D]"></span>
+          <h3 id="modal-title" class="text-lg font-bold text-[#2B2B2B]">亞東醫院「藥找查」衛教資源</h3>
+        </div>
+        <button onclick="closeResourceModal()" class="p-2 rounded-lg text-[#64748B] hover:bg-[#F7F6F2] hover:text-[#2B2B2B]" aria-label="關閉視窗">
+          <svg class="w-5 h-5 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div id="modal-body" class="py-4 text-sm text-[#2B2B2B] space-y-3 leading-relaxed"></div>
+      <div class="pt-3 border-t border-[#E2E0D8] flex justify-end gap-2">
+        <button onclick="closeResourceModal()" class="px-4 py-2 rounded-lg border border-[#E2E0D8] text-sm font-medium text-[#2B2B2B] hover:bg-[#F7F6F2]">
+          關閉視窗
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       全站外層容器（支援手動切換 自動 / 電腦版 / 手機版 預覽框架）
+       ========================================================================== -->
+  <div id="app-shell" class="flex-1 flex flex-col w-full transition-all duration-200">
+
+    <!-- 1. 頂部常駐導覽列 (MUJI 酒紅品牌頂欄 + 工具列) -->
+    <header class="sticky top-0 z-40 w-full">
+      <!-- 主酒紅橫幅 -->
+      <div class="mobile-header-compact bg-[#7F1D1D] text-white px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <!-- 手機版/收合狀態漢堡選單按鈕 -->
+          <button id="mobile-drawer-btn" onclick="toggleMobileDrawer()" class="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white lg:hidden" aria-label="開啟導覽目錄">
+            <svg class="w-5 h-5 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          <!-- 扁平化醫療十字標誌 -->
+          <div class="w-9 h-9 rounded-lg bg-white/15 border border-white/25 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-white flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6V3z" />
+            </svg>
+          </div>
+
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-bold tracking-wide text-base sm:text-lg">亞東紀念醫院 藥學部</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-white/15 border border-white/25 font-medium">藥找查 編號 105</span>
+            </div>
+            <p class="text-xs text-white/85 mt-0.5">抗凝血藥品 Warfarin（可化凝錠）動態衛教手冊</p>
+          </div>
+        </div>
+
+        <!-- 右側控制工具群：離線狀態、字級切換、電腦/手機視圖切換、影片與諮詢 -->
+        <div class="mobile-header-tools flex flex-wrap items-center gap-2">
+          <!-- 離線快取狀態指示器 -->
+          <div id="offline-badge" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/10 border border-white/20 text-xs">
+            <span id="offline-dot" class="w-2 h-2 rounded-full bg-emerald-300"></span>
+            <span id="offline-text">離線快取就緒</span>
+          </div>
+
+          <!-- 字級切換：A 標準 / A+ 長輩大字級 -->
+          <div class="inline-flex rounded-lg bg-black/20 p-0.5 border border-white/15" role="group" aria-label="字級大小切換">
+            <button id="font-normal-btn" onclick="setFontScale('normal')" class="px-2.5 py-1 rounded-md text-xs font-semibold bg-white text-[#7F1D1D] transition">
+              A 標準
+            </button>
+            <button id="font-large-btn" onclick="setFontScale('large')" class="px-2.5 py-1 rounded-md text-xs font-semibold text-white/90 hover:text-white transition">
+              A+ 長輩大字
+            </button>
+          </div>
+
+          <!-- 手動視圖切換：自動 / 電腦版 / 手機版 -->
+          <div id="viewport-switcher" class="hidden sm:inline-flex rounded-lg bg-black/20 p-0.5 border border-white/15" role="group" aria-label="裝置檢視模式切換">
+            <button data-view="auto" onclick="setViewportMode('auto')" class="view-btn px-2.5 py-1 rounded-md text-xs font-medium bg-white text-[#7F1D1D] transition">
+              自動
+            </button>
+            <button data-view="desktop" onclick="setViewportMode('desktop')" class="view-btn px-2.5 py-1 rounded-md text-xs font-medium text-white/90 hover:text-white transition">
+              電腦版
+            </button>
+            <button data-view="mobile" onclick="setViewportMode('mobile')" class="view-btn px-2.5 py-1 rounded-md text-xs font-medium text-white/90 hover:text-white transition">
+              手機版
+            </button>
+          </div>
+
+          <!-- 衛教影片與完整衛教本 -->
+          <button onclick="openResourceModal('videos')" class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 border border-white/25 text-xs font-medium flex items-center gap-1.5 transition">
+            <svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+            <span>衛教影片／完整本</span>
+          </button>
+
+          <!-- 藥物諮詢專線 -->
+          <a href="tel:0289667000,2123" class="px-3 py-1.5 rounded-lg bg-white text-[#7F1D1D] hover:bg-[#F7F6F2] text-xs font-bold flex items-center gap-1.5 transition">
+            <svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+            </svg>
+            <span>諮詢 (02)8966-7000#2123</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 麵包屑次導覽列（無印細線分隔） -->
+      <div class="bg-[#EFECE6] border-b border-[#E2E0D8] px-4 sm:px-6 py-2 flex items-center justify-between text-xs text-[#64748B] relative">
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <button onclick="switchTab('overview')" class="hover:text-[#7F1D1D] font-medium">首頁</button>
+          <span>›</span>
+          <div class="relative inline-block">
+            <button
+              type="button"
+              onclick="toggleBreadcrumbMenu(event)"
+              class="inline-flex items-center gap-1 hover:text-[#7F1D1D] font-medium px-1.5 py-0.5 rounded hover:bg-black/5 transition"
+              aria-expanded="false"
+              aria-haspopup="true"
+            >
+              <span>Warfarin 用藥教育</span>
+              <svg class="w-3 h-3 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <!-- 麵包屑章節快速切換下拉選單 -->
+            <div id="breadcrumb-chapter-menu" class="hidden absolute left-0 mt-1.5 w-64 bg-white border border-[#E2E0D8] rounded-xl shadow-lg py-1.5 z-50">
+              <div class="px-3 py-1 text-[11px] font-bold text-[#64748B] border-b border-[#E2E0D8]">快速切換衛教章節</div>
+              <button type="button" onclick="selectFromBreadcrumb('overview')" class="w-full text-left px-3 py-2 text-xs hover:bg-[#F7F6F2] text-[#2B2B2B] font-medium">首頁總覽（INR 概念尺與情境）</button>
+              <button type="button" onclick="selectFromBreadcrumb('tab1')" class="w-full text-left px-3 py-2 text-xs hover:bg-[#F7F6F2] text-[#2B2B2B] font-medium">1. 認識 Warfarin 與錠劑外觀</button>
+              <button type="button" onclick="selectFromBreadcrumb('tab2')" class="w-full text-left px-3 py-2 text-xs hover:bg-[#F7F6F2] text-[#2B2B2B] font-medium">2. 忘記服藥（12 小時法則）</button>
+              <button type="button" onclick="selectFromBreadcrumb('tab3')" class="w-full text-left px-3 py-2 text-xs hover:bg-[#F7F6F2] text-[#2B2B2B] font-medium">3. 出血與栓塞危險訊號</button>
+              <button type="button" onclick="selectFromBreadcrumb('tab4')" class="w-full text-left px-3 py-2 text-xs hover:bg-[#F7F6F2] text-[#2B2B2B] font-medium">4. 維生素 K 與交互作用搜尋</button>
+              <button type="button" onclick="selectFromBreadcrumb('tab5')" class="w-full text-left px-3 py-2 text-xs hover:bg-[#F7F6F2] text-[#2B2B2B] font-medium">5. 生活安全與用藥紀錄卡</button>
+            </div>
+          </div>
+          <span>›</span>
+          <span id="breadcrumb-current" class="font-bold text-[#7F1D1D]">總覽與認識 Warfarin</span>
+        </div>
+        <span class="hidden md:inline text-[11px] text-[#64748B]">亞東紀念醫院藥學部「藥找查 105」・全模組離線可用</span>
+      </div>
+    </header>
+
+    <!-- ==========================================================================
+         主體工作區：左側邊欄分頁導航 ＋ 右側主內容畫布
+         ========================================================================== -->
+    <div id="workspace-grid" class="flex-1 flex flex-col lg:flex-row relative">
+
+      <!-- 手機版抽屜背景遮罩 -->
+      <div id="drawer-backdrop" onclick="closeMobileDrawer()" class="fixed inset-0 bg-black/40 z-30 hidden"></div>
+
+      <!-- 2. 左側邊欄導航架構（參考無印分類目錄＋跨模組快速搜尋） -->
+      <aside id="left-sidebar" class="hidden lg:flex w-full lg:w-80 shrink-0 bg-[#EFECE6] border-r border-[#E2E0D8] flex-col justify-between transition-transform duration-200 z-30">
+        <div class="p-4 space-y-5">
+          <!-- 側欄頂部：跨模組即時關鍵字搜尋框 -->
+          <div class="bg-white border border-[#E2E0D8] rounded-xl p-3.5">
+            <label for="sidebar-search-input" class="block text-xs font-bold text-[#2B2B2B] mb-2 flex items-center justify-between">
+              <span>跨模組快速搜尋</span>
+              <span class="text-[11px] font-normal text-[#64748B]">食材 / 保健品 / 症狀</span>
+            </label>
+            <div class="relative">
+              <input
+                id="sidebar-search-input"
+                type="text"
+                oninput="handleGlobalSearch(this.value)"
+                placeholder="輸入如：菠菜、魚油、當歸、忘記..."
+                class="w-full pl-3 pr-9 py-2 text-sm bg-[#F7F6F2] border border-[#E2E0D8] rounded-lg text-[#2B2B2B] placeholder-[#64748B] focus:outline-none focus:border-[#7F1D1D] focus:bg-white transition"
+              />
+              <button id="clear-search-btn" onclick="clearGlobalSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-[#64748B] hover:text-[#2B2B2B]" aria-label="清除搜尋">
+                <svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <svg id="search-icon" class="w-4 h-4 text-[#64748B] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8" />
+                <path d="M21 21l-4.35-4.35" />
+              </svg>
+            </div>
+
+            <!-- 即時搜尋結果下拉清單 -->
+            <div id="search-results-box" class="hidden mt-3 pt-2.5 border-t border-[#E2E0D8] space-y-1.5 max-h-64 overflow-y-auto"></div>
+          </div>
+
+          <!-- 左側 5 大核心分頁目錄 -->
+          <div>
+            <div class="px-2 mb-2 flex items-center justify-between">
+              <span class="text-xs font-bold tracking-wider text-[#64748B]">衛教功能分頁（點擊切換）</span>
+              <span class="text-[11px] text-[#64748B]">5 大模組</span>
+            </div>
+
+            <nav class="space-y-1.5" aria-label="Warfarin 衛教分頁導航">
+              <!-- 分頁 1 -->
+              <button data-tab="tab1" onclick="switchTab('tab1')" class="nav-tab-btn w-full text-left px-3.5 py-3 rounded-xl border border-transparent flex items-center gap-3 transition">
+                <span class="tab-icon-wrap w-8 h-8 rounded-lg bg-white border border-[#E2E0D8] flex items-center justify-center shrink-0 text-[#2B2B2B]">
+                  <svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M10.5 20.5L3.5 13.5a4.95 4.95 0 117-7l7 7a4.95 4.95 0 01-7 7z" />
+                    <path d="M8.5 8.5l7 7" />
+                  </svg>
+                </span>
+                <div class="min-w-0 flex-1">
+                  <div class="text-sm font-bold truncate">1. 認識 Warfarin 與錠劑</div>
+                  <div class="text-xs text-[#64748B] truncate">作用機轉、INR 刻度、規格外觀</div>
+                </div>
+              </button>
+
+              <!-- 分頁 2 -->
+              <button data-tab="tab2" onclick="switchTab('tab2')" class="nav-tab-btn w-full text-left px-3.5 py-3 rounded-xl border border-transparent flex items-center gap-3 transition">
+                <span class="tab-icon-wrap w-8 h-8 rounded-lg bg-white border border-[#E2E0D8] flex items-center justify-center shrink-0 text-[#2B2B2B]">
+                  <svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 7v5l3 2" />
+                  </svg>
+                </span>
+                <div class="min-w-0 flex-1">
+                  <div class="text-sm font-bold truncate">2. 忘記服藥（12小時法則）</div>
+                  <div class="text-xs text-[#64748B] truncate">補服時間試算、動態時間軸</div>
+                </div>
+              </button>
+
+              <!-- 分頁 3 -->
+              <button data-tab="tab3" onclick="switchTab('tab3')" class="nav-tab-btn w-full text-left px-3.5 py-3 rounded-xl border border-transparent flex items-center gap-3 transition">
+                <span class="tab-icon-wrap w-8 h-8 rounded-lg bg-white border border-[#E2E0D8] flex items-center justify-center shrink-0 text-[#2B2B2B]">
+                  <svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                    <path d="M12 9v4M12 17h.01" />
+                  </svg>
+                </span>
+                <div class="min-w-0 flex-1">
+                  <div class="text-sm font-bold truncate">3. 出血與栓塞危險訊號</div>
+                  <div class="text-xs text-[#64748B] truncate">緊急就醫紅旗檢核、聯絡提醒</div>
+                </div>
+              </button>
+
+              <!-- 分頁 4 -->
+              <button data-tab="tab4" onclick="switchTab('tab4')" class="nav-tab-btn w-full text-left px-3.5 py-3 rounded-xl border border-transparent flex items-center gap-3 transition">
+                <span class="tab-icon-wrap w-8 h-8 rounded-lg bg-white border border-[#E2E0D8] flex items-center justify-center shrink-0 text-[#2B2B2B]">
+                  <svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M11 20A7 7 0 014 13V7a1 1 0 011-1h6a7 7 0 017 7v6a1 1 0 01-1 1h-6z" />
+                    <path d="M11 20v-9" />
+                  </svg>
+                </span>
+                <div class="min-w-0 flex-1">
+                  <div class="text-sm font-bold truncate">4. 維生素 K 與交互作用</div>
+                  <div class="text-xs text-[#64748B] truncate">定量碗概念、食物/保健品/中藥</div>
+                </div>
+              </button>
+
+              <!-- 分頁 5 -->
+              <button data-tab="tab5" onclick="switchTab('tab5')" class="nav-tab-btn w-full text-left px-3.5 py-3 rounded-xl border border-transparent flex items-center gap-3 transition">
+                <span class="tab-icon-wrap w-8 h-8 rounded-lg bg-white border border-[#E2E0D8] flex items-center justify-center shrink-0 text-[#2B2B2B]">
+                  <svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <rect x="4" y="3" width="16" height="18" rx="2" />
+                    <path d="M8 7h8M8 11h8M8 15h5" />
+                  </svg>
+                </span>
+                <div class="min-w-0 flex-1">
+                  <div class="text-sm font-bold truncate">5. 生活安全與用藥紀錄卡</div>
+                  <div class="text-xs text-[#64748B] truncate">懷孕哺乳、日常防護、週紀錄表</div>
+                </div>
+              </button>
+            </nav>
+          </div>
+        </div>
+
+        <!-- 側邊欄底部：院方諮詢與出版資訊卡片 -->
+        <div class="p-4 border-t border-[#E2E0D8] bg-[#E8E4DC]/60 space-y-2.5 text-xs">
+          <div class="font-bold text-[#2B2B2B] flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-[#7F1D1D]"></span>
+            <span>亞東醫院藥物諮詢專線</span>
+          </div>
+          <p class="text-[#2B2B2B] font-semibold">(02) 8966-7000 轉分機 2123</p>
+          <div class="flex items-center gap-2 pt-1">
+            <a href="http://www.e-pharm.info" target="_blank" rel="noopener noreferrer" class="underline text-[#7F1D1D] hover:text-[#651515]">
+              藥學部官網 e-pharm.info
+            </a>
+            <span class="text-[#64748B]">|</span>
+            <button onclick="openResourceModal('sources')" class="underline text-[#64748B] hover:text-[#2B2B2B]">
+              資料出處與版權
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ==========================================================================
+           3. 右側主內容畫布（動態切換分頁，確保各裝置排版穩定不跑版）
+           ========================================================================== -->
+      <main class="mobile-main-pad flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full space-y-6">
+
+        <!-- 結論導向 Hero 標題與 INR 達標視覺刻度尺（僅在「首頁總覽」顯示，切換至 1~5 分頁時自動隱藏避免頁面過長） -->
+        <section id="hero-overview-banner" class="bg-white border border-[#E2E0D8] rounded-2xl p-5 sm:p-6 space-y-5">
+          <div class="flex flex-col gap-3.5 pb-4 border-b border-[#E2E0D8]">
+            <div class="space-y-1.5 w-full">
+              <div class="inline-flex flex-wrap items-center gap-2 text-xs font-bold text-[#7F1D1D] bg-[#7F1D1D]/10 px-2.5 py-1 rounded-md">
+                <span>口服抗凝血劑用藥安全指南</span>
+                <span>・</span>
+                <span>2026/02/02 第九版</span>
+              </div>
+              <h1 class="text-lg sm:text-xl lg:text-2xl lg:whitespace-nowrap font-bold text-[#2B2B2B] leading-snug">
+                每天固定時間服用 <span class="text-[#7F1D1D]">Warfarin</span>，穩定 <span class="text-[#007A87]">INR</span> 才能預防血栓又避免出血
+              </h1>
+              <p class="text-sm text-[#64748B]">
+                掌握定期抽血監測、12 小時忘記服藥法則與固定維生素 K 飲食，守護您的治療安全。
+              </p>
+            </div>
+            <div class="pt-0.5">
+              <button onclick="switchTab('tab1')" class="inline-flex items-center px-4 py-2.5 rounded-xl bg-[#7F1D1D] text-white text-xs font-bold hover:bg-[#651515] transition">
+                開始閱讀：1. 認識藥品與錠劑 ›
+              </button>
+            </div>
+          </div>
+
+          <!-- INR 抗凝血數值監測動態視覺尺（三欄網格對齊，杜絕窄螢幕與大字級重疊） -->
+          <div class="space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="text-sm font-bold text-[#2B2B2B]">INR 抗凝血功能監測概念尺（國際標準化凝血酶原時間比）</span>
+              <span class="text-xs px-2.5 py-1 rounded-full bg-[#E6F4F5] text-[#007A87] font-semibold">
+                醫師會依病情設定個人化 INR 目標區間（常見約 2.0–3.0）
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <div class="grid grid-cols-3 text-center text-xs font-bold">
+                <div class="text-[#64748B]">INR 偏低</div>
+                <div>
+                  <span class="inline-block bg-[#007A87] text-white px-2.5 py-0.5 rounded-md">INR 達標（有效防護）</span>
+                </div>
+                <div class="text-[#BE123C]">INR 偏高</div>
+              </div>
+              <div class="h-3 rounded-full bg-[#EFECE6] overflow-hidden grid grid-cols-3">
+                <div class="h-full bg-[#D6D3C9]"></div>
+                <div class="h-full bg-[#007A87]"></div>
+                <div class="h-full bg-[#BE123C]"></div>
+              </div>
+              <div class="grid grid-cols-3 gap-2 text-xs">
+                <div class="text-left font-medium text-[#64748B]">血栓風險增加</div>
+                <div class="text-center font-bold text-[#007A87]">穩定抗凝血區間</div>
+                <div class="text-right font-bold text-[#BE123C]">出血風險增加</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 三大情境快捷處理卡片（一鍵跳轉對應互動分頁） -->
+          <div class="pt-4 border-t border-[#E2E0D8]">
+            <div class="text-xs font-bold text-[#64748B] mb-2.5">快速情境處理（點擊立即進入對應工具）：</div>
+            <div class="mobile-single-col grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <!-- 情境 1：忘記吃藥 -->
+              <button onclick="switchTab('tab2')" class="group text-left p-4 rounded-xl border border-[#E2E0D8] bg-[#F7F6F2]/60 hover:bg-white hover:border-[#7F1D1D] transition flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-xl bg-white border border-[#E2E0D8] group-hover:border-[#7F1D1D] flex items-center justify-center shrink-0 text-[#7F1D1D]">
+                  <svg class="w-6 h-6 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 7v5l3 2" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-sm font-bold text-[#2B2B2B] group-hover:text-[#7F1D1D]">忘記吃藥怎麼辦？</div>
+                  <div class="text-xs text-[#64748B] mt-0.5">12 小時法則即時判斷</div>
+                </div>
+              </button>
+
+              <!-- 情境 2：觀察到出血或血栓症狀 -->
+              <button onclick="switchTab('tab3')" class="group text-left p-4 rounded-xl border border-[#E2E0D8] bg-[#F7F6F2]/60 hover:bg-white hover:border-[#BE123C] transition flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-xl bg-white border border-[#E2E0D8] group-hover:border-[#BE123C] flex items-center justify-center shrink-0 text-[#BE123C]">
+                  <svg class="w-6 h-6 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                    <path d="M12 9v4M12 17h.01" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-sm font-bold text-[#2B2B2B] group-hover:text-[#BE123C]">出現出血或血栓症狀？</div>
+                  <div class="text-xs text-[#64748B] mt-0.5">危險訊號快速檢核表</div>
+                </div>
+              </button>
+
+              <!-- 情境 3：今天吃什麼要注意 -->
+              <button onclick="switchTab('tab4')" class="group text-left p-4 rounded-xl border border-[#E2E0D8] bg-[#F7F6F2]/60 hover:bg-white hover:border-[#007A87] transition flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-xl bg-white border border-[#E2E0D8] group-hover:border-[#007A87] flex items-center justify-center shrink-0 text-[#007A87]">
+                  <svg class="w-6 h-6 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M11 20A7 7 0 014 13V7a1 1 0 011-1h6a7 7 0 017 7v6a1 1 0 01-1 1h-6z" />
+                    <path d="M11 20v-9" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-sm font-bold text-[#2B2B2B] group-hover:text-[#007A87]">今天吃什麼要注意？</div>
+                  <div class="text-xs text-[#64748B] mt-0.5">維生素 K 與保健品查詢</div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================================================
+             動態分頁內容容器（每次僅渲染當前選中分頁，確保流暢不延遲）
+             ======================================================================== -->
+        <div id="dynamic-tab-content" class="tab-panel-animate"></div>
+
+        <!-- 頁尾版權與出版資訊（完整保留亞東醫院藥學部與臺灣臨床藥學會資料） -->
+        <footer class="bg-white border border-[#E2E0D8] rounded-2xl p-5 text-xs text-[#64748B] space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[#E2E0D8]">
+            <span class="font-bold text-[#2B2B2B]">亞東紀念醫院 藥學部「藥找查」用藥指導單（編號 105｜全院編碼 SH209）</span>
+            <span>編印日期：2026 年 02 月 02 日 第九版</span>
+          </div>
+          <p class="leading-relaxed">
+            內容整合自《亞東紀念醫院藥學部可化凝錠 Warfarin 用藥指導單》與《社團法人臺灣臨床藥學會抗凝血藥品 Warfarin 用藥教育手冊（第一版）》。本網頁資訊僅供衛教參考，不可取代醫師或藥師之專業診斷與處方調整；若有任何用藥疑問，請電洽亞東醫院藥物諮詢專線 <strong>(02) 8966-7000 轉分機 2123</strong>。
+          </p>
+        </footer>
+
+      </main>
+    </div>
+
+    <!-- ==========================================================================
+         手機版底部常駐 5 分頁導覽列（維持無印暖米白＋酒紅主色，單手拇指快速切換）
+         ========================================================================== -->
+    <nav id="mobile-bottom-nav" class="md:hidden sticky bottom-0 z-40 bg-white/95 backdrop-blur border-t border-[#E2E0D8] px-1 py-1.5 grid grid-cols-6 gap-0.5 no-print" aria-label="手機版底部快速導覽列">
+      <button type="button" data-bottom-tab="overview" onclick="switchTab('overview')" class="mobile-bottom-btn flex flex-col items-center justify-center py-1 rounded-lg text-[#7F1D1D] font-bold transition">
+        <svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+        </svg>
+        <span class="text-[10px] mt-0.5">首頁</span>
+      </button>
+      <button type="button" data-bottom-tab="tab1" onclick="switchTab('tab1')" class="mobile-bottom-btn flex flex-col items-center justify-center py-1 rounded-lg text-[#64748B] transition">
+        <svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M10.5 20.5L3.5 13.5a4.95 4.95 0 117-7l7 7a4.95 4.95 0 01-7 7z" />
+        </svg>
+        <span class="text-[10px] mt-0.5">1.藥物</span>
+      </button>
+      <button type="button" data-bottom-tab="tab2" onclick="switchTab('tab2')" class="mobile-bottom-btn flex flex-col items-center justify-center py-1 rounded-lg text-[#64748B] transition">
+        <svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 7v5l3 2" />
+        </svg>
+        <span class="text-[10px] mt-0.5">2.漏吃</span>
+      </button>
+      <button type="button" data-bottom-tab="tab3" onclick="switchTab('tab3')" class="mobile-bottom-btn flex flex-col items-center justify-center py-1 rounded-lg text-[#64748B] transition">
+        <svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+          <path d="M12 9v4M12 17h.01" />
+        </svg>
+        <span class="text-[10px] mt-0.5">3.警訊</span>
+      </button>
+      <button type="button" data-bottom-tab="tab4" onclick="switchTab('tab4')" class="mobile-bottom-btn flex flex-col items-center justify-center py-1 rounded-lg text-[#64748B] transition">
+        <svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M11 20A7 7 0 014 13V7a1 1 0 011-1h6a7 7 0 017 7v6a1 1 0 01-1 1h-6z" />
+        </svg>
+        <span class="text-[10px] mt-0.5">4.飲食</span>
+      </button>
+      <button type="button" data-bottom-tab="tab5" onclick="switchTab('tab5')" class="mobile-bottom-btn flex flex-col items-center justify-center py-1 rounded-lg text-[#64748B] transition">
+        <svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <rect x="4" y="3" width="16" height="18" rx="2" />
+          <path d="M8 7h8M8 11h8" />
+        </svg>
+        <span class="text-[10px] mt-0.5">5.紀錄</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ==========================================================================
+       Phase 1 互動狀態管理、跨模組搜尋與無印分頁渲染腳本
+       ========================================================================== -->
+  <script>
+    // --------------------------------------------------------------------------
+    // 1. 跨模組知識索引資料（支援左側邊欄即時關鍵字搜尋）
+    // --------------------------------------------------------------------------
+    const QUICK_SEARCH_INDEX = [
+      { keyword: '可化凝錠 Cofarin 5mg 1mg 淺橘 桃色 粉紅 183 278 GP 錠劑', title: '可化凝錠 Cofarin® 5mg / 1mg 雙面刻痕與外觀規格', badge: '認識藥物', badgeColor: 'teal', tab: 'tab1' },
+      { keyword: '脈化寧 Mafarin 瓦寧 Uwarin 歐服寧 Orfarin 可邁丁 Coumadin 商品名', title: '台灣常見各廠牌 Warfarin 錠劑規格外觀對照（共 11 款）', badge: '錠劑辨識', badgeColor: 'teal', tab: 'tab1' },
+      { keyword: 'INR 抽血 抗凝血 血栓 心房纖維顫動 瓣膜 中風 肺栓塞 抗磷脂質', title: '為什麼要吃 Warfarin？7 大臨床適應症與每次回診抽血測 INR', badge: '認識藥物', badgeColor: 'teal', tab: 'tab1' },
+      { keyword: '忘記吃藥 漏吃 12小時 補吃 雙倍 兩次', title: '忘記服藥「12 小時法則」：12 小時內補服，超過則跳過', badge: '忘記服藥', badgeColor: 'burgundy', tab: 'tab2' },
+      { keyword: '牙齦出血 黑便 血尿 咳血 瘀青 流血不止 15 30分鐘', title: '出血危險訊號：傷口流血超過 15–30 分鐘不止、黑便/血尿', badge: '危險訊號', badgeColor: 'crimson', tab: 'tab3' },
+      { keyword: '呼吸短促 胸悶 胸痛 單側無力 口齒不清 頭暈 腫脹', title: '栓塞危險訊號：單側手腳無力、口齒不清、呼吸短促', badge: '危險訊號', badgeColor: 'crimson', tab: 'tab3' },
+      { keyword: '菠菜 芥菜 青花菜 地瓜葉 綠茶 內臟 納豆 維生素K', title: '高含量維生素 K 食物（>100μg/100g）：維持每日固定份量', badge: '維生素K', badgeColor: 'teal', tab: 'tab4' },
+      { keyword: '葡萄柚 柚子 蔓越莓 芒果 木瓜 櫻桃 酒精 大蒜 薑', title: '可能增強藥效之食物：大量酒精、蔓越莓、葡萄柚/柚子等', badge: '增強藥效', badgeColor: 'crimson', tab: 'tab4' },
+      { keyword: '魚油 維生素E 葡萄糖胺 銀杏 納豆激酶 當歸 丹蔘 薑黃 人蔘', title: '保健品與中草藥交互作用：魚油(>2g)、當歸、人蔘等', badge: '交互作用', badgeColor: 'burgundy', tab: 'tab4' },
+      { keyword: '懷孕 哺乳 避孕 1個月 手術 拔牙 軟毛牙刷 紀錄卡', title: '懷孕禁用、停藥後避孕 1 個月、拔牙手術告知與用藥紀錄卡', badge: '生活安全', badgeColor: 'teal', tab: 'tab5' }
+    ];
+
+    // --------------------------------------------------------------------------
+    // 1-B. Phase 2 完整資料庫：台灣常見 Warfarin 錠劑規格外觀（11 款）與臨床適應症
+    // --------------------------------------------------------------------------
+    const WARFARIN_INDICATIONS = [
+      { title: '心房纖維顫動', desc: '預防心律不整造成心房內血液滯留形成血塊，降低中風風險。', icon: 'heart' },
+      { title: '心臟瓣膜置換或修補後', desc: '預防人工機械瓣膜或修補處表面產生血栓。', icon: 'shield' },
+      { title: '缺血性腦中風', desc: '預防血栓隨血流阻塞腦部血管，降低再次中風機率。', icon: 'brain' },
+      { title: '肺部或腿部靜脈栓塞', desc: '治療與預防深層靜脈栓塞（DVT）及肺栓塞（PE）。', icon: 'lungs' },
+      { title: '心肌梗塞後預防栓塞', desc: '心肌梗塞後降低心室內血栓與其他循環栓塞發生。', icon: 'pulse' },
+      { title: '易產生血栓風險體質', desc: '其他循環系統栓塞或先天／後天易栓塞體質之長期防護。', icon: 'flow' },
+      { title: '抗磷脂質症候群', desc: 'Antiphospholipid syndrome，抑制自體免疫相關之血管血栓形成。', icon: 'cell' }
+    ];
+
+    const WARFARIN_TABLETS = [
+      {
+        id: 'cofarin-5',
+        brandKey: 'cofarin',
+        isHospitalStock: true,
+        zhName: '可化凝錠',
+        enName: 'Cofarin®',
+        dose: '5 毫克',
+        colorText: '淺橘色／桃色',
+        shapeText: '圓形錠劑',
+        diameterMm: 8.8,
+        scoreText: '一字刻痕',
+        frontMarkTop: '183',
+        frontMarkBottom: '5',
+        backMark: 'GP',
+        markDesc: '一字刻痕，183 5 / GP',
+        fillHex: '#F3B48E',
+        strokeHex: '#D5875A',
+        textHex: '#5A2B14',
+        note: '亞東紀念醫院常備主力品項（健保碼 AC55271100）'
+      },
+      {
+        id: 'cofarin-1',
+        brandKey: 'cofarin',
+        isHospitalStock: true,
+        zhName: '可化凝錠',
+        enName: 'Cofarin®',
+        dose: '1 毫克',
+        colorText: '粉紅色',
+        shapeText: '圓形錠劑',
+        diameterMm: 8.8,
+        scoreText: '一字刻痕',
+        frontMarkTop: 'G P',
+        frontMarkBottom: '',
+        backMark: '278',
+        markDesc: '一字刻痕，GP / 278',
+        fillHex: '#EE9FB1',
+        strokeHex: '#CC7287',
+        textHex: '#5A1928',
+        note: '亞東紀念醫院常備主力品項（健保碼 AC43862100）'
+      },
+      {
+        id: 'mafarin-5',
+        brandKey: 'mafarin',
+        isHospitalStock: false,
+        zhName: '脈化寧錠',
+        enName: 'Mafarin®',
+        dose: '5 毫克',
+        colorText: '磚紅色',
+        shapeText: '圓形錠劑',
+        diameterMm: 9.0,
+        scoreText: '一字刻痕',
+        frontMarkTop: 'MF',
+        frontMarkBottom: '5',
+        backMark: '—',
+        markDesc: '一字刻痕，MF5',
+        fillHex: '#C55A52',
+        strokeHex: '#963932',
+        textHex: '#FFF5F5',
+        note: '他廠常見商品名，領藥核對劑量時請留意顏色與刻字'
+      },
+      {
+        id: 'mafarin-2.5',
+        brandKey: 'mafarin',
+        isHospitalStock: false,
+        zhName: '脈化寧錠',
+        enName: 'Mafarin®',
+        dose: '2.5 毫克',
+        colorText: '膚色',
+        shapeText: '圓形錠劑',
+        diameterMm: 9.0,
+        scoreText: '一字刻痕',
+        frontMarkTop: 'MF',
+        frontMarkBottom: '2½',
+        backMark: '—',
+        markDesc: '一字刻痕，MF2½',
+        fillHex: '#EAD0B8',
+        strokeHex: '#C2A387',
+        textHex: '#4A3625',
+        note: '2.5 毫克規格，切勿與 5 毫克或 1 毫克混淆'
+      },
+      {
+        id: 'mafarin-1',
+        brandKey: 'mafarin',
+        isHospitalStock: false,
+        zhName: '脈化寧錠',
+        enName: 'Mafarin®',
+        dose: '1 毫克',
+        colorText: '淡黃色',
+        shapeText: '圓形錠劑',
+        diameterMm: 9.0,
+        scoreText: '一字刻痕',
+        frontMarkTop: 'MF',
+        frontMarkBottom: '1',
+        backMark: '—',
+        markDesc: '一字刻痕，MF1',
+        fillHex: '#F6E89E',
+        strokeHex: '#CDBB67',
+        textHex: '#4D4212',
+        note: '1 毫克淡黃色圓形錠劑'
+      },
+      {
+        id: 'uwarin-5',
+        brandKey: 'uwarin',
+        isHospitalStock: false,
+        zhName: '瓦寧錠',
+        enName: 'Uwarin®',
+        dose: '5 毫克',
+        colorText: '淺橘色',
+        shapeText: '圓形扁平錠劑',
+        diameterMm: 8.5,
+        scoreText: '一字刻痕',
+        frontMarkTop: 'WAF5',
+        frontMarkBottom: 'UL',
+        backMark: '—',
+        markDesc: '一字刻痕，WAF5, UL',
+        fillHex: '#F6BA8E',
+        strokeHex: '#D6915E',
+        textHex: '#592E10',
+        note: '圓形扁平錠劑，直徑 8.5mm'
+      },
+      {
+        id: 'uwarin-2.5',
+        brandKey: 'uwarin',
+        isHospitalStock: false,
+        zhName: '瓦寧錠',
+        enName: 'Uwarin®',
+        dose: '2.5 毫克',
+        colorText: '淺綠色',
+        shapeText: '圓形扁平錠劑',
+        diameterMm: 8.5,
+        scoreText: '一字刻痕',
+        frontMarkTop: 'WAF2.5',
+        frontMarkBottom: 'UL',
+        backMark: '—',
+        markDesc: '一字刻痕，WAF2.5, UL',
+        fillHex: '#B7DFBE',
+        strokeHex: '#84B58D',
+        textHex: '#1D4725',
+        note: '淺綠色圓形扁平錠劑，直徑 8.5mm'
+      },
+      {
+        id: 'uwarin-1',
+        brandKey: 'uwarin',
+        isHospitalStock: false,
+        zhName: '瓦寧錠',
+        enName: 'Uwarin®',
+        dose: '1 毫克',
+        colorText: '粉紅色',
+        shapeText: '圓形扁平錠劑',
+        diameterMm: 8.5,
+        scoreText: '一字刻痕',
+        frontMarkTop: 'WAF1',
+        frontMarkBottom: 'UL',
+        backMark: '—',
+        markDesc: '一字刻痕，WAF1, UL',
+        fillHex: '#F4AEC0',
+        strokeHex: '#CE7E93',
+        textHex: '#591B2C',
+        note: '粉紅色圓形扁平錠劑，直徑 8.5mm'
+      },
+      {
+        id: 'orfarin-5',
+        brandKey: 'orfarin',
+        isHospitalStock: false,
+        zhName: '歐服寧錠',
+        enName: 'Orfarin®',
+        dose: '5 毫克',
+        colorText: '粉紅色',
+        shapeText: '圓形扁平錠劑',
+        diameterMm: 7.0,
+        scoreText: '一字刻痕',
+        frontMarkTop: 'ORN',
+        frontMarkBottom: '18',
+        backMark: '—',
+        markDesc: '一字刻痕，ORN18',
+        fillHex: '#F3A8BC',
+        strokeHex: '#CC788F',
+        textHex: '#59192B',
+        note: '注意：歐服寧 5mg 為粉紅色（直徑 7mm），與可化凝 1mg 顏色相近，務必看清刻字 ORN18！'
+      },
+      {
+        id: 'orfarin-3',
+        brandKey: 'orfarin',
+        isHospitalStock: false,
+        zhName: '歐服寧錠',
+        enName: 'Orfarin®',
+        dose: '3 毫克',
+        colorText: '淺藍色',
+        shapeText: '圓形扁平錠劑',
+        diameterMm: 7.0,
+        scoreText: '一字刻痕',
+        frontMarkTop: 'ORN',
+        frontMarkBottom: '17',
+        backMark: '—',
+        markDesc: '一字刻痕，ORN17',
+        fillHex: '#A7CEE8',
+        strokeHex: '#73A2C4',
+        textHex: '#153B57',
+        note: '3 毫克特殊規格，淺藍色圓形扁平錠劑（直徑 7mm）'
+      }
+    ];
+
+    // --------------------------------------------------------------------------
+    // 1-C. Phase 4 完整資料庫：出血與栓塞「危險訊號」檢核清單（整合兩份衛教文件）
+    // --------------------------------------------------------------------------
+    const BLEEDING_WARNING_SIGNS = [
+      { id: 'bld-wound', severity: 'severe', title: '傷口流血超過 15 至 30 分鐘仍未止血', desc: '按壓傷口超過 15–30 分鐘仍持續滲血或血流不止。', icon: 'bandage' },
+      { id: 'bld-urine', severity: 'severe', title: '紅色或深棕色的尿液（血尿）', desc: '排尿顏色異常偏紅、粉紅或呈現濃茶／深棕色。', icon: 'droplet' },
+      { id: 'bld-stool', severity: 'severe', title: '血便或黑便（如瀝青般黑亮）', desc: '解出鮮紅色血便，或柏油狀深黑色大便，代表消化道可能出血。', icon: 'alert' },
+      { id: 'bld-vomit', severity: 'severe', title: '咳血或嘔吐物帶血（咖啡渣樣）', desc: '咳嗽痰中帶血、吐血，或嘔吐物呈暗紅／咖啡渣色。', icon: 'lungs' },
+      { id: 'bld-bruise', severity: 'severe', title: '皮膚不明原因大面積或持續擴散瘀青、紫斑', desc: '未碰撞卻出現大片瘀血、紫斑，或瘀青範圍持續腫脹擴大。', icon: 'shield' },
+      { id: 'bld-eye', severity: 'severe', title: '不明原因眼球出血（眼白大片鮮紅）', desc: '眼睛結膜出現大片鮮紅血塊或伴隨視力異常。', icon: 'eye' },
+      { id: 'bld-headache', severity: 'severe', title: '劇烈頭痛不止或嚴重跌倒／頭部撞擊', desc: '突發劇烈頭痛無法緩解，或發生嚴重跌倒、頭部撞擊後（須防顱內出血）。', icon: 'brain' },
+      { id: 'bld-vaginal', severity: 'severe', title: '月經出血量異常增加或非經期陰道出血', desc: '經血量明顯比平日多出許多，或非生理期間異常出血。', icon: 'alert' },
+      { id: 'bld-gum', severity: 'mild', title: '刷牙時輕微牙齦出血', desc: '若為輕微滲血且短時間內可止血，不必過度驚慌（建議改用軟毛牙刷）；若大量或持續流血不止請盡快回診。', icon: 'smile' },
+      { id: 'bld-nose', severity: 'mild', title: '輕微流鼻血', desc: '先坐姿微前傾加壓止血，輕微且很快止血可先觀察並告知醫師；若超過 15–30 分鐘未止血請立即就醫。', icon: 'droplet' }
+    ];
+
+    const CLOT_WARNING_SIGNS = [
+      { id: 'clot-breath', title: '呼吸短促、呼吸困難', desc: '休息或輕微活動即感到喘不過氣，須警覺肺部栓塞可能。', icon: 'lungs' },
+      { id: 'clot-chest', title: '突然胸悶、胸部疼痛或頭暈', desc: '胸口壓迫感、悶痛、刺痛或伴隨冒冷汗與頭暈。', icon: 'heart' },
+      { id: 'clot-limb-weak', title: '單側手或腳突然無力', desc: '單側手臂無法舉起、握力下降，或單側下肢突然無力（可能發生於單側或雙側）。', icon: 'pulse' },
+      { id: 'clot-speech', title: '突然口齒不清或說話困難', desc: '講話含糊、表達困難或突然聽不懂別人說話（腦中風警訊）。', icon: 'brain' },
+      { id: 'clot-vision', title: '視力突然模糊改變或喪失', desc: '單眼或雙眼視線突然變暗、重影或視野缺損。', icon: 'eye' },
+      { id: 'clot-balance', title: '嚴重頭痛或走路失去平衡', desc: '突發嚴重頭痛、步態不穩、眩暈或協調困難。', icon: 'alert' },
+      { id: 'clot-numb', title: '身體任何部分出現麻木或刺痛感', desc: '臉部、手臂或腿部突然發麻、感覺遲鈍或針刺感。', icon: 'cell' },
+      { id: 'clot-swelling', title: '四肢出現腫脹、疼痛、發紅或熱燙感', desc: '單側或雙側小腿／手臂明顯水腫、壓痛、皮膚發紅或摸起來發熱（深層靜脈栓塞警訊）。', icon: 'shield' }
+    ];
+
+    // --------------------------------------------------------------------------
+    // 1-D. Phase 5 完整資料庫：維生素 K 食物分級（每 100g）＆ 增強/降低藥效交互作用
+    // --------------------------------------------------------------------------
+    const VITAMIN_K_AND_INTERACTIONS = [
+      // 高含量維生素 K (>100μg / 100g)
+      { id: 'vk-high-veg', filterKey: 'vk-high', category: '高含量維生素 K 食物', tag: '每 100g > 100μg', tagStyle: 'burgundy', name: '深綠色葉菜類（菠菜、芥菜、芥藍菜、青花菜/綠花椰、地瓜葉、羽衣甘藍、芽甘藍、萵苣、蘿蔓、甜菜葉、蕪菁葉、綠葉高麗菜）', note: '並非完全不能吃，關鍵在於「每天維持固定份量」（例如以飯碗定量），避免忽多忽少影響 INR。' },
+      { id: 'vk-high-herb', filterKey: 'vk-high', category: '高含量維生素 K 食物', tag: '每 100g > 100μg', tagStyle: 'burgundy', name: '辛香配菜葉類（青蔥、香菜、九層塔）', note: '每 100g 含大於 100μg 維生素 K；日常少量調味入菜影響有限，避免大量生食或突然暴增攝取。' },
+      { id: 'vk-high-soy', filterKey: 'vk-high', category: '高含量維生素 K 食物', tag: '每 100g > 100μg', tagStyle: 'burgundy', name: '豆類與發酵豆製品（鷹嘴豆/雞豆、板豆腐、豆干、納豆）', note: '板豆腐、豆干與納豆維生素 K 含量高，請維持固定攝取習慣；另請避開高濃度納豆激酶保健品。' },
+      { id: 'vk-high-tea', filterKey: 'vk-high', category: '高含量維生素 K 食物', tag: '每 100g > 100μg', tagStyle: 'burgundy', name: '茶葉類（綠茶葉、紅茶葉）', note: '茶葉乾重每 100g 含大於 100μg 維生素 K，日常飲茶請維持固定濃淡與杯數，勿突然大量飲用濃茶。' },
+      { id: 'vk-high-organ', filterKey: 'vk-high', category: '高含量維生素 K 食物', tag: '每 100g > 100μg', tagStyle: 'burgundy', name: '動物內臟類（牛肝、豬肝等）', note: '動物肝臟富含維生素 K，建議避免一次大量食用或維持穩定攝取頻率。' },
+      { id: 'vk-high-oil', filterKey: 'vk-high', category: '高含量維生素 K 食物', tag: '每 100g > 100μg', tagStyle: 'burgundy', name: '特定植物油（菜籽油、大豆油、沙拉油｜約 7 湯匙 ≈ 100mL）', note: '日常家庭烹調用油量固定即可，避免大量油炸或突然更換高含量用油習慣。' },
+
+      // 中含量維生素 K (30~100μg / 100g)
+      { id: 'vk-med-veg', filterKey: 'vk-med', category: '中含量維生素 K 食物', tag: '每 100g 30–100μg', tagStyle: 'teal', name: '淺色與芽菜類（白葉高麗菜、結球萵苣、苜蓿芽、蘆筍、秋葵、芹菜）', note: '屬於中等維生素 K 含量（30–100μg/100g），均衡飲食並維持每餐固定碗量即可。' },
+      { id: 'vk-med-nut', filterKey: 'vk-med', category: '中含量維生素 K 食物', tag: '每 100g 30–100μg', tagStyle: 'teal', name: '堅果乾果與豆仁（黑棗乾、腰果、豌豆、綠豆）', note: '適量攝取並維持固定份量即可，避免短期內大量食用黑棗乾或堅果。' },
+      { id: 'vk-med-fruit', filterKey: 'vk-med', category: '中含量維生素 K 食物', tag: '每 100g 30–100μg', tagStyle: 'teal', name: '特定水果（酪梨、奇異果）', note: '每 100g 含 30–100μg 維生素 K，可正常均衡食用，保持每日水果份量穩定。' },
+      { id: 'vk-med-oil', filterKey: 'vk-med', category: '中含量維生素 K 食物', tag: '每 100g 30–100μg', tagStyle: 'teal', name: '油脂與抹醬（人造奶油 Margarine、美乃滋、橄欖油｜約 7 湯匙 ≈ 100mL）', note: '一般正常調味與烹調用量無虞，維持穩定飲食習慣即可。' },
+
+      // 低含量維生素 K (<30μg / 100g)
+      { id: 'vk-low-veg', filterKey: 'vk-low', category: '低含量維生素 K 食物', tag: '每 100g < 30μg', tagStyle: 'neutral', name: '淺色與根莖瓜果蔬菜（白花菜/白花椰、青紅椒、胡蘿蔔、苦瓜、玉米、茄子、蘑菇、去皮小黃瓜、甜菜根、南瓜、地瓜、馬鈴薯、洋蔥、竹筍）', note: '維生素 K 含量低（<30μg/100g），適合做為日常均衡蔬菜搭配（注意洋蔥若大量生食或濃縮精仍須留意）。' },
+      { id: 'vk-low-protein', filterKey: 'vk-low', category: '低含量維生素 K 食物', tag: '每 100g < 30μg', tagStyle: 'neutral', name: '肉類、海鮮與蛋奶（鮭魚、鮪魚、雞肉、牛肉、豬肉、火腿、蝦、雞蛋、原味優格、牛奶、乳酪、傳統豆腐）', note: '優質蛋白質來源，維生素 K 含量低，可安心納入每日均衡飲食。' },
+      { id: 'vk-low-grain', filterKey: 'vk-low', category: '低含量維生素 K 食物', tag: '每 100g < 30μg', tagStyle: 'neutral', name: '全穀雜糧主食（米飯、義大利麵、原味貝果、白吐司、原味玉米穀片）', note: '維生素 K 含量低，適合做為每餐定量主食基礎。' },
+      { id: 'vk-low-fruit', filterKey: 'vk-low', category: '低含量維生素 K 食物', tag: '每 100g < 30μg', tagStyle: 'neutral', name: '多數日常水果（藍莓、紅蘋果、水蜜桃、木瓜、西瓜、哈密瓜、櫻桃、檸檬、芭樂、草莓、香蕉、亞洲梨子、橘子、柳丁、葡萄、覆盆莓）', note: '維生素 K 含量低（<30μg/100g）；但木瓜、櫻桃、芒果若「大量食用或加工果汁/果乾/果醬」可能增強藥效，請適量。' },
+      { id: 'vk-low-oil', filterKey: 'vk-low', category: '低含量維生素 K 食物', tag: '每 100g < 30μg', tagStyle: 'neutral', name: '低含量油脂與堅果（葵花油、酪梨油、花生、花生油、芝麻、芝麻油）', note: '每 100g 含低於 30μg 維生素 K，日常正常烹調使用即可。' },
+
+      // 可能增強 Warfarin 藥效（出血風險增加）
+      { id: 'enh-food-alcohol', filterKey: 'enhance', category: '食物／飲品（增強藥效）', tag: '↑ 增強藥效・出血風險', tagStyle: 'crimson', name: '酒精性飲料、蔓越莓、石榴', note: '請勿飲酒（酒精影響肝臟代謝）；避免大量攝取蔓越莓（含果汁/果乾）與石榴，以免藥效過強導致出血。' },
+      { id: 'enh-food-fruit', filterKey: 'enhance', category: '食物／飲品（增強藥效）', tag: '↑ 增強藥效・出血風險', tagStyle: 'crimson', name: '大量葡萄柚／柚子／木瓜／櫻桃／芒果（含果汁、果乾、果醬等加工品）', note: '大量食用或濃縮加工製品會抑制代謝或增強抗凝血作用，請先諮詢醫師或藥師。' },
+      { id: 'enh-food-spice', filterKey: 'enhance', category: '食物／辛香料（增強藥效）', tag: '↑ 增強藥效・出血風險', tagStyle: 'crimson', name: '大量大蒜、洋蔥、辣椒、薑、生薑粉', note: '日常煮菜「少量入菜調味」影響較少，但應避免短期大量生食、飲用濃縮薑汁或服用大蒜精。' },
+      { id: 'enh-supp', filterKey: 'enhance', category: '保健食品（濃縮萃取高單位）', tag: '↑ 增強藥效・出血風險', tagStyle: 'crimson', name: '銀杏、蔓越莓錠、魚油（>2 克/天）、維生素 E（>400 IU/天）、葡萄糖胺（>500 mg/天）、木瓜酵素、鳳梨酵素、蜂王乳、葡萄子、亞麻子、大蒜精、蝦紅素、甲殼素、納豆激酶（Nattokinase）', note: '濃縮高單位保健食品極易增強出血風險，使用或停用前務必先與醫師或藥師討論！' },
+      { id: 'enh-herb', filterKey: 'enhance', category: '中草藥與藥膳補品', tag: '↑ 增強藥效・出血風險', tagStyle: 'crimson', name: '當歸、丹蔘、薑黃、靈芝、甘草、枸杞、川芎、芍藥（白芍/赤芍）、紅花、番紅花、川牛膝、桃仁、延胡索、益母草、洋甘菊（Camomile）', note: '中藥及含藥食補（如十全大補湯、四物湯、薑母鴨藥包）成分複雜，應盡量避免，切勿自行服用。' },
+
+      // 可能降低 Warfarin 藥效（血栓風險增加）
+      { id: 'red-supp', filterKey: 'reduce', category: '保健食品／食物（降低藥效）', tag: '↓ 降低藥效・血栓風險', tagStyle: 'teal', name: '高劑量維生素 C（>1–2 克/天）、輔酶 Q10（CoQ10）、高劑量維生素 K 補充劑、諾麗果（Noni）、黃豆／大豆發酵液', note: '可能減弱 Warfarin 抗凝血效果，增加血栓發生風險，使用前請先諮詢醫師或藥師。' },
+      { id: 'red-herb', filterKey: 'reduce', category: '中草藥（降低藥效）', tag: '↓ 降低藥效・血栓風險', tagStyle: 'teal', name: '人蔘、東洋蔘、西洋蔘、高麗蔘、車前子、貫葉連翹（金絲桃草，St. John’s Wort）', note: '蔘類與貫葉連翹會加速代謝或降低抗凝血藥效，服用期間請勿自行進補蔘茶或草本萃取。' },
+
+      // 其他併服藥品交互作用原則
+      { id: 'drug-other', filterKey: 'drugs', category: '其他併服西藥／成藥交互作用', tag: '雙向影響・須主動告知', tagStyle: 'burgundy', name: '止痛消炎藥（NSAIDs/阿斯匹靈）、抗生素、抗黴菌藥、胃藥、心律不整藥、降血脂藥、感冒成藥等', note: '部分藥品會抑制或加速 Warfarin 代謝，Warfarin 亦可能影響其他藥品療效。就醫或至藥局買藥時務必主動告知正在服用 Warfarin；新增、停用或改變任何藥量前須經醫師／藥師評估。' }
+    ];
+
+    // --------------------------------------------------------------------------
+    // 2. 分頁標題與全域應用狀態管理
+    // --------------------------------------------------------------------------
+    const TAB_META = {
+      overview: { title: '總覽與認識 Warfarin' },
+      tab1: { title: '1. 認識 Warfarin 與錠劑外觀對照' },
+      tab2: { title: '2. 忘記服藥「12 小時法則」互動判斷器' },
+      tab3: { title: '3. 出血與栓塞「危險訊號」快速檢核' },
+      tab4: { title: '4. 維生素 K 食物分級與交互作用搜尋器' },
+      tab5: { title: '5. 生活安全、懷孕哺乳與用藥紀錄卡' }
+    };
+
+    function getCurrentHHMM() {
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, '0');
+      const mm = String(now.getMinutes()).padStart(2, '0');
+      return `${hh}:${mm}`;
+    }
+
+    const APP_STATE = {
+      currentTab: 'overview',
+      fontScale: localStorage.getItem('warfarin_font_scale') || 'normal',
+      viewportMode: 'auto',
+      drawerOpen: false,
+      // Phase 2 認識 Warfarin 與錠劑對照狀態（預設僅顯示本院品項可化凝錠，他廠收合）
+      simulatedInr: 2.5,
+      tabletBrandFilter: 'cofarin',
+      showOtherBrands: false,
+      usedTabletIds: JSON.parse(localStorage.getItem('warfarin_used_tablets') || '["cofarin-5"]'),
+      // Phase 3 忘記服藥 12 小時法則狀態
+      scheduledTime: '09:00',
+      discoveryTime: getCurrentHHMM(),
+      missedMultipleOrUnsure: false,
+      // Phase 4 出血與栓塞危險訊號檢核狀態
+      selectedWarningIds: [],
+      // Phase 5 維生素 K 與交互作用搜尋篩選狀態
+      dietFilterCategory: 'all',
+      dietSearchQuery: '',
+      // Phase 6 生活安全、懷孕哺乳與用藥紀錄卡狀態
+      medCard: JSON.parse(
+        localStorage.getItem('warfarin_med_card_v1') ||
+          JSON.stringify({
+            patientName: '',
+            tabletStrength: '可化凝錠 5mg',
+            targetInr: '2.0 - 3.0',
+            emergencyContact: '',
+            emergencyPhone: '',
+            hospitalName: '亞東紀念醫院',
+            doctorName: '',
+            pharmacistName: '',
+            hospitalPhone: '(02) 8966-7000 轉 2123',
+            notes: '',
+            gasWebhookUrl: '',
+            lastSyncedAt: '',
+            weekRows: [
+              { day: '週一', date: '', dose: '', inr: '' },
+              { day: '週二', date: '', dose: '', inr: '' },
+              { day: '週三', date: '', dose: '', inr: '' },
+              { day: '週四', date: '', dose: '', inr: '' },
+              { day: '週五', date: '', dose: '', inr: '' },
+              { day: '週六', date: '', dose: '', inr: '' },
+              { day: '週日', date: '', dose: '', inr: '' }
+            ]
+          })
+      ),
+      // 手機版手風琴區塊展開／收合狀態（電腦版預設全展開，手機版次要長文預設收合）
+      mobileAccordions: {
+        tab1Mechanism: false,
+        tab1Indications: false,
+        tab2Rules: false,
+        tab5Pregnancy: false,
+        tab5Safety: false
+      }
+    };
+
+    function isCompactMobileView() {
+      return APP_STATE.viewportMode === 'mobile' || window.innerWidth < 768;
+    }
+
+    function toggleMobileAccordion(key) {
+      APP_STATE.mobileAccordions[key] = !APP_STATE.mobileAccordions[key];
+      renderTabContent(APP_STATE.currentTab);
+    }
+
+    function buildAccordionHeader(key, title, subtitle, badgeText, badgeClass) {
+      const isMobile = isCompactMobileView();
+      const isOpen = !isMobile || !!APP_STATE.mobileAccordions[key];
+      if (!isMobile) {
+        return `
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#E2E0D8]">
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-[#2B2B2B]">${title}</h3>
+              ${subtitle ? `<p class="text-xs text-[#64748B] mt-0.5">${subtitle}</p>` : ''}
+            </div>
+            ${badgeText ? `<span class="text-xs px-2.5 py-1 rounded-md font-bold ${badgeClass}">${badgeText}</span>` : ''}
+          </div>
+        `;
+      }
+      return `
+        <button
+          type="button"
+          onclick="toggleMobileAccordion('${key}')"
+          class="w-full text-left flex items-center justify-between gap-2.5 py-1 transition"
+          aria-expanded="${isOpen}"
+        >
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-center gap-1.5">
+              <span class="text-sm font-bold text-[#2B2B2B]">${title}</span>
+              ${badgeText ? `<span class="text-[10px] px-2 py-0.5 rounded font-bold ${badgeClass}">${badgeText}</span>` : ''}
+            </div>
+            ${subtitle ? `<p class="text-xs text-[#64748B] mt-0.5 truncate">${subtitle}</p>` : ''}
+          </div>
+          <span class="shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#F7F6F2] border border-[#E2E0D8] text-[11px] font-bold text-[#7F1D1D]">
+            <span>${isOpen ? '收合' : '展開'}</span>
+            <svg class="w-3.5 h-3.5 flat-icon transition-transform ${isOpen ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </span>
+        </button>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 2-A. 扁平化 SVG 圖示產生器（適應症、警訊與雙面藥錠刻痕）
+    // --------------------------------------------------------------------------
+    function getIndicationIcon(type) {
+      const icons = {
+        heart: '<svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>',
+        shield: '<svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+        brain: '<svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9h.01M15 9h.01M9 15c1.5 1 4.5 1 6 0"/></svg>',
+        lungs: '<svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v8M12 12c-3 0-6 2-6 6v2h4v-5M12 12c3 0 6 2 6 6v2h-4v-5"/></svg>',
+        pulse: '<svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+        flow: '<svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></svg>',
+        cell: '<svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>',
+        bandage: '<svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="4"/><path d="M9 8v8M15 8v8"/></svg>',
+        droplet: '<svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>',
+        alert: '<svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>',
+        eye: '<svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
+        smile: '<svg class="w-4 h-4 flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/></svg>'
+      };
+      return icons[type] || icons.shield;
+    }
+
+    function buildTabletSvg(tablet) {
+      const r = Math.round(tablet.diameterMm * 2.5);
+      return `
+        <div class="flex items-center justify-center gap-3 py-2">
+          <!-- 正面（含一字刻痕與主標記） -->
+          <div class="flex flex-col items-center gap-1">
+            <svg width="56" height="56" viewBox="0 0 56 56" aria-label="${tablet.zhName} ${tablet.dose} 正面外觀">
+              <circle cx="28" cy="28" r="${r}" fill="${tablet.fillHex}" stroke="${tablet.strokeHex}" stroke-width="2" />
+              <line x1="${28 - r + 3}" y1="28" x2="${28 + r - 3}" y2="28" stroke="${tablet.strokeHex}" stroke-width="1.8" />
+              <text x="28" y="${tablet.frontMarkBottom ? '23' : '25'}" text-anchor="middle" fill="${tablet.textHex}" font-size="8.5" font-weight="700" font-family="Inter, sans-serif">${tablet.frontMarkTop}</text>
+              ${
+                tablet.frontMarkBottom
+                  ? `<text x="28" y="38" text-anchor="middle" fill="${tablet.textHex}" font-size="8.5" font-weight="700" font-family="Inter, sans-serif">${tablet.frontMarkBottom}</text>`
+                  : ''
+              }
+            </svg>
+            <span class="text-[10px] text-[#64748B]">正面</span>
+          </div>
+          <!-- 背面 -->
+          <div class="flex flex-col items-center gap-1">
+            <svg width="56" height="56" viewBox="0 0 56 56" aria-label="${tablet.zhName} ${tablet.dose} 背面外觀">
+              <circle cx="28" cy="28" r="${r}" fill="${tablet.fillHex}" stroke="${tablet.strokeHex}" stroke-width="2" />
+              <text x="28" y="31" text-anchor="middle" fill="${tablet.textHex}" font-size="9" font-weight="700" font-family="Inter, sans-serif">${tablet.backMark}</text>
+            </svg>
+            <span class="text-[10px] text-[#64748B]">背面</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 2-B. Phase 2 互動控制器：INR 數值模擬器 & 錠劑品牌篩選 / 使用標記 (V)
+    // --------------------------------------------------------------------------
+    function updateInrSimulator(rawVal) {
+      const val = parseFloat(rawVal);
+      APP_STATE.simulatedInr = val;
+      const valDisplay = document.getElementById('sim-inr-val');
+      const statusBox = document.getElementById('sim-inr-status');
+      const slider = document.getElementById('sim-inr-slider');
+      if (slider) slider.value = val;
+      if (valDisplay) valDisplay.textContent = val.toFixed(1);
+      if (!statusBox) return;
+
+      if (val < 2.0) {
+        statusBox.className = 'p-4 rounded-xl border border-[#D6D3C9] bg-[#F7F6F2] space-y-1';
+        statusBox.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-bold text-[#2B2B2B]">INR ${val.toFixed(1)}（偏低區間・抗凝血藥效不足）</span>
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-[#2B2B2B] text-white">血栓風險增加</span>
+          </div>
+          <p class="text-xs text-[#64748B] leading-relaxed">
+            血液較容易凝固，無法有效阻止血栓形成。請確認是否有漏吃藥物或近期攝取過多高維生素 K 食物／降低藥效保健品，並依醫師指示回診調整劑量。
+          </p>
+        `;
+      } else if (val <= 3.0) {
+        statusBox.className = 'p-4 rounded-xl border border-[#007A87]/35 bg-[#E6F4F5] space-y-1';
+        statusBox.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-bold text-[#007A87]">INR ${val.toFixed(1)}（常見理想達標區間 2.0–3.0）</span>
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-[#007A87] text-white">穩定防護狀態</span>
+          </div>
+          <p class="text-xs text-[#2B2B2B] leading-relaxed">
+            抗凝血效果穩定，能有效預防血栓且出血風險較低。請繼續保持每日固定時間服藥與穩定飲食份量（實際個人目標值仍以主治醫師設定為準）。
+          </p>
+        `;
+      } else {
+        statusBox.className = 'p-4 rounded-xl border border-[#FECDD3] bg-[#FFF1F2] space-y-1';
+        statusBox.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-bold text-[#BE123C]">INR ${val.toFixed(1)}（偏高區間・血液不易凝固）</span>
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-[#BE123C] text-white">非預期性出血風險</span>
+          </div>
+          <p class="text-xs text-[#2B2B2B] leading-relaxed">
+            血液凝固時間過長，可能增加牙齦出血、大片瘀青、血尿或黑便風險。切勿自行停藥或減量，請依醫師指示調整劑量並密切觀察出血危險訊號。
+          </p>
+        `;
+      }
+    }
+
+    function filterTabletBrand(brandKey) {
+      APP_STATE.tabletBrandFilter = brandKey;
+      if (brandKey !== 'cofarin') {
+        APP_STATE.showOtherBrands = true;
+      }
+      document.querySelectorAll('.brand-filter-btn').forEach((btn) => {
+        if (btn.getAttribute('data-brand') === brandKey) {
+          btn.classList.add('bg-[#7F1D1D]', 'text-white', 'border-[#7F1D1D]');
+          btn.classList.remove('bg-white', 'text-[#2B2B2B]', 'border-[#E2E0D8]');
+        } else {
+          btn.classList.remove('bg-[#7F1D1D]', 'text-white', 'border-[#7F1D1D]');
+          btn.classList.add('bg-white', 'text-[#2B2B2B]', 'border-[#E2E0D8]');
+        }
+      });
+      renderTabletGrid();
+    }
+
+    function toggleOtherBrandsPanel() {
+      APP_STATE.showOtherBrands = !APP_STATE.showOtherBrands;
+      if (!APP_STATE.showOtherBrands) {
+        APP_STATE.tabletBrandFilter = 'cofarin';
+      } else if (APP_STATE.tabletBrandFilter === 'cofarin') {
+        APP_STATE.tabletBrandFilter = 'all';
+      }
+      renderTabContent('tab1');
+    }
+
+    function toggleCurrentTablet(tabletId) {
+      const idx = APP_STATE.usedTabletIds.indexOf(tabletId);
+      if (idx >= 0) {
+        APP_STATE.usedTabletIds.splice(idx, 1);
+        showToast('已取消該規格品項標記');
+      } else {
+        APP_STATE.usedTabletIds.push(tabletId);
+        showToast('已將此規格標記為您目前使用的品項 (V)');
+      }
+      localStorage.setItem('warfarin_used_tablets', JSON.stringify(APP_STATE.usedTabletIds));
+      renderTabletGrid();
+    }
+
+    function renderTabletGrid() {
+      const grid = document.getElementById('tablet-cards-grid');
+      if (!grid) return;
+      const list = !APP_STATE.showOtherBrands
+        ? WARFARIN_TABLETS.filter((t) => t.isHospitalStock)
+        : APP_STATE.tabletBrandFilter === 'all'
+        ? WARFARIN_TABLETS
+        : WARFARIN_TABLETS.filter((t) => t.brandKey === APP_STATE.tabletBrandFilter);
+
+      grid.innerHTML = list
+        .map((t) => {
+          const isUsed = APP_STATE.usedTabletIds.includes(t.id);
+          return `
+            <div class="p-4 rounded-xl border ${
+              isUsed ? 'border-[#007A87] bg-[#E6F4F5]/35' : 'border-[#E2E0D8] bg-white'
+            } flex flex-col justify-between space-y-3 transition">
+              <div class="space-y-2">
+                <div class="flex items-start justify-between gap-2">
+                  <div>
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="text-sm font-bold text-[#2B2B2B]">${t.zhName} ${t.enName}</span>
+                      ${
+                        t.isHospitalStock
+                          ? '<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#7F1D1D] text-white">亞東常備</span>'
+                          : ''
+                      }
+                    </div>
+                    <div class="text-base font-bold text-[#7F1D1D] mt-0.5">${t.dose}</div>
+                  </div>
+                  <button
+                    type="button"
+                    onclick="toggleCurrentTablet('${t.id}')"
+                    class="px-2.5 py-1 rounded-lg border text-xs font-bold transition ${
+                      isUsed
+                        ? 'bg-[#007A87] text-white border-[#007A87]'
+                        : 'bg-[#F7F6F2] text-[#64748B] border-[#E2E0D8] hover:border-[#007A87] hover:text-[#007A87]'
+                    }"
+                  >
+                    ${isUsed ? '✓ 使用中 (V)' : '標記使用 (V)'}
+                  </button>
+                </div>
+
+                ${buildTabletSvg(t)}
+
+                <div class="text-xs space-y-1 pt-2 border-t border-[#E2E0D8] text-[#2B2B2B]">
+                  <div class="flex justify-between"><span class="text-[#64748B]">顏色／形狀：</span><span class="font-medium">${t.colorText}・${t.shapeText}</span></div>
+                  <div class="flex justify-between"><span class="text-[#64748B]">直徑大小：</span><span class="font-medium">直徑 ${t.diameterMm} mm</span></div>
+                  <div class="flex justify-between"><span class="text-[#64748B]">刻痕標記：</span><span class="font-bold text-[#2B2B2B]">${t.markDesc}</span></div>
+                </div>
+              </div>
+
+              <p class="text-[11px] text-[#64748B] bg-[#F7F6F2] px-2.5 py-1.5 rounded-lg leading-relaxed">
+                ${t.note}
+              </p>
+            </div>
+          `;
+        })
+        .join('');
+    }
+
+    // --------------------------------------------------------------------------
+    // 2-C. Phase 3 互動控制器：忘記服藥「12 小時法則」時間差計算與動態時間軸
+    // --------------------------------------------------------------------------
+    function parseTimeToMinutes(hhmm) {
+      const [h, m] = (hhmm || '09:00').split(':').map(Number);
+      return (isNaN(h) ? 9 : h) * 60 + (isNaN(m) ? 0 : m);
+    }
+
+    function formatMinutesToHHMM(totalMins) {
+      const normalized = ((totalMins % 1440) + 1440) % 1440;
+      const h = String(Math.floor(normalized / 60)).padStart(2, '0');
+      const m = String(normalized % 60).padStart(2, '0');
+      return `${h}:${m}`;
+    }
+
+    function setMissedDosePreset(sched, disc, unsure = false) {
+      APP_STATE.scheduledTime = sched;
+      APP_STATE.discoveryTime = disc;
+      APP_STATE.missedMultipleOrUnsure = unsure;
+      const schedInput = document.getElementById('missed-sched-input');
+      const discInput = document.getElementById('missed-disc-input');
+      const unsureCheck = document.getElementById('missed-unsure-check');
+      if (schedInput) schedInput.value = sched;
+      if (discInput) discInput.value = disc;
+      if (unsureCheck) unsureCheck.checked = unsure;
+      updateMissedDoseCalculator();
+    }
+
+    function onMissedDoseInputChange() {
+      const schedInput = document.getElementById('missed-sched-input');
+      const discInput = document.getElementById('missed-disc-input');
+      const unsureCheck = document.getElementById('missed-unsure-check');
+      if (schedInput) APP_STATE.scheduledTime = schedInput.value || '09:00';
+      if (discInput) APP_STATE.discoveryTime = discInput.value || getCurrentHHMM();
+      if (unsureCheck) APP_STATE.missedMultipleOrUnsure = unsureCheck.checked;
+      updateMissedDoseCalculator();
+    }
+
+    function updateMissedDoseCalculator() {
+      const resultContainer = document.getElementById('missed-dose-result');
+      if (!resultContainer) return;
+
+      if (APP_STATE.missedMultipleOrUnsure) {
+        resultContainer.innerHTML = `
+          <div class="p-5 rounded-2xl border-2 border-[#BE123C] bg-[#FFF1F2] space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="px-3 py-1 rounded-full bg-[#BE123C] text-white text-xs font-bold">
+                連續忘記超過 2 次或不確定・已鎖定補服操作
+              </span>
+              <span class="text-xs font-bold text-[#BE123C]">切勿自行補吃兩倍劑量</span>
+            </div>
+            <h4 class="text-base sm:text-lg font-bold text-[#BE123C]">
+              請勿自行補服，請立即與您的醫師或藥師聯繫！
+            </h4>
+            <p class="text-xs sm:text-sm text-[#2B2B2B] leading-relaxed">
+              若您已經超過二次劑量忘記服用，或不確定上次是否已經吃過藥，自行補吃可能導致抗凝血過度並引發出血風險。請立即來電諮詢藥師或回診評估。
+            </p>
+            <div class="pt-1">
+              <a href="tel:0289667000,2123" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#BE123C] text-white text-xs font-bold hover:bg-[#9F1239] transition">
+                立即撥打亞東醫院藥物諮詢：(02) 8966-7000 轉 2123
+              </a>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      const schedMins = parseTimeToMinutes(APP_STATE.scheduledTime);
+      const discMins = parseTimeToMinutes(APP_STATE.discoveryTime);
+      let diffMins = discMins - schedMins;
+      if (diffMins < 0) diffMins += 1440;
+
+      const diffHours = Math.floor(diffMins / 60);
+      const diffRemMins = diffMins % 60;
+      const diffLabel = `${diffHours} 小時${diffRemMins > 0 ? ` ${diffRemMins} 分` : ''}`;
+      const midpointTime = formatMinutesToHHMM(schedMins + 720);
+      const pinPercent = Math.min(98, Math.max(2, (diffMins / 1440) * 100));
+      const isUnder12h = diffMins < 720;
+
+      resultContainer.innerHTML = `
+        <div class="p-5 rounded-2xl border ${
+          isUnder12h ? 'border-[#007A87] bg-[#E6F4F5]/55' : 'border-[#BE123C] bg-[#FFF1F2]/70'
+        } space-y-5 transition-all">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b ${
+            isUnder12h ? 'border-[#007A87]/20' : 'border-[#BE123C]/20'
+          }">
+            <div class="flex items-center gap-2.5">
+              <span class="px-3 py-1 rounded-full text-xs font-bold text-white ${
+                isUnder12h ? 'bg-[#007A87]' : 'bg-[#BE123C]'
+              }">
+                已過 ${diffLabel}（${isUnder12h ? '在 12 小時內' : '已滿或超過 12 小時'}）
+              </span>
+              <span class="text-xs font-semibold text-[#64748B]">12 小時分界點：${midpointTime}</span>
+            </div>
+            <span class="text-xs font-bold ${isUnder12h ? 'text-[#007A87]' : 'text-[#BE123C]'}">
+              ${isUnder12h ? '結論：立即補吃 1 次劑量' : '結論：今天跳過不吃，嚴禁吃雙倍'}
+            </span>
+          </div>
+
+          <div class="bg-white border border-[#E2E0D8] rounded-xl p-4 space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold">
+              <span class="text-[#2B2B2B]">原本服藥時間：${APP_STATE.scheduledTime}</span>
+              <span class="text-[#7F1D1D]">中點（+12h）：${midpointTime}</span>
+              <span class="text-[#2B2B2B]">下次服藥時間：${APP_STATE.scheduledTime}</span>
+            </div>
+
+            <div class="relative pt-7 pb-6">
+              <div style="left: ${pinPercent}%;" class="animate-pin-drop absolute top-0 flex flex-col items-center z-10">
+                <span class="px-2 py-0.5 rounded bg-[#2B2B2B] text-white text-[11px] font-bold whitespace-nowrap shadow-sm">
+                  現在發現 ${APP_STATE.discoveryTime}
+                </span>
+                <div class="w-0.5 h-3 bg-[#2B2B2B]"></div>
+              </div>
+
+              <div class="h-3.5 rounded-full overflow-hidden flex border border-[#E2E0D8]">
+                <div class="w-1/2 h-full bg-[#007A87] flex items-center justify-center text-[10px] font-bold text-white">
+                  0–12 小時內（儘速補服）
+                </div>
+                <div class="w-1/2 h-full bg-[#BE123C] flex items-center justify-center text-[10px] font-bold text-white">
+                  超過 12 小時（跳過不補）
+                </div>
+              </div>
+
+              <div class="absolute left-1/2 top-6 bottom-4 w-0.5 bg-[#2B2B2B] -translate-x-1/2"></div>
+            </div>
+
+            <div class="mobile-single-col grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-[#E2E0D8]">
+              <div class="p-3.5 rounded-xl border ${
+                isUnder12h ? 'border-[#007A87] bg-[#E6F4F5]/60' : 'border-[#BE123C] bg-[#FFF1F2]/60'
+              } flex items-center gap-3.5">
+                <div class="w-12 h-12 rounded-full flex items-center justify-center shrink-0 font-bold text-xs text-white ${
+                  isUnder12h ? 'bg-[#007A87] animate-pill-teal' : 'bg-[#BE123C] animate-pill-crimson'
+                }">
+                  ${isUnder12h ? '補 1 次' : '跳過 0'}
+                </div>
+                <div>
+                  <div class="text-xs font-bold text-[#64748B]">步驟一：現在處置</div>
+                  <div class="text-sm font-bold ${isUnder12h ? 'text-[#007A87]' : 'text-[#BE123C]'} mt-0.5">
+                    ${isUnder12h ? '請立即補吃「原本當次 1 份劑量」' : '現在跳過不要吃了！'}
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-3.5 rounded-xl border border-[#E2E0D8] bg-[#F7F6F2] flex items-center gap-3.5">
+                <div class="w-12 h-12 rounded-full bg-white border border-[#2B2B2B] text-[#2B2B2B] flex items-center justify-center shrink-0 font-bold text-xs">
+                  正常 1x
+                </div>
+                <div>
+                  <div class="text-xs font-bold text-[#64748B]">步驟二：下次時間（${APP_STATE.scheduledTime}）</div>
+                  <div class="text-sm font-bold text-[#2B2B2B] mt-0.5">
+                    準時服用「當次 1 份劑量」即可，切勿一次吃雙倍！
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 2-D. Phase 4 互動控制器：出血與栓塞危險訊號點選檢核與分流橫幅
+    // --------------------------------------------------------------------------
+    function toggleWarningSymptom(symptomId) {
+      const idx = APP_STATE.selectedWarningIds.indexOf(symptomId);
+      if (idx >= 0) {
+        APP_STATE.selectedWarningIds.splice(idx, 1);
+      } else {
+        APP_STATE.selectedWarningIds.push(symptomId);
+      }
+      renderWarningModule();
+    }
+
+    function clearSelectedWarnings() {
+      APP_STATE.selectedWarningIds = [];
+      renderWarningModule();
+    }
+
+    function renderWarningModule() {
+      const bannerEl = document.getElementById('warning-triage-banner');
+      const bleedingGrid = document.getElementById('bleeding-signs-grid');
+      const clotGrid = document.getElementById('clot-signs-grid');
+      if (!bannerEl || !bleedingGrid || !clotGrid) return;
+
+      const selected = APP_STATE.selectedWarningIds;
+      const hasSevereBleeding = BLEEDING_WARNING_SIGNS.some(
+        (s) => s.severity === 'severe' && selected.includes(s.id)
+      );
+      const hasClot = CLOT_WARNING_SIGNS.some((s) => selected.includes(s.id));
+      const hasMildOnly = selected.length > 0 && !hasSevereBleeding && !hasClot;
+
+      if (selected.length === 0) {
+        bannerEl.innerHTML = `
+          <div class="p-4 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] flex flex-wrap items-center justify-between gap-3">
+            <div class="text-xs sm:text-sm text-[#2B2B2B]">
+              <strong>自我檢核操作方式：</strong>請在下方點選您或家人目前觀察到的症狀（可複選），系統將立即提示對應的緊急處置與就醫建議。
+            </div>
+            <span class="text-xs text-[#64748B]">目前未勾選任何異常症狀</span>
+          </div>
+        `;
+      } else if (hasSevereBleeding || hasClot) {
+        bannerEl.innerHTML = `
+          <div class="p-5 rounded-2xl border-2 border-[#BE123C] bg-[#FFF1F2] space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="px-3 py-1 rounded-full bg-[#BE123C] text-white text-xs font-bold">
+                紅色緊急警訊・已勾選 ${selected.length} 項症狀
+              </span>
+              <button type="button" onclick="clearSelectedWarnings()" class="text-xs underline text-[#64748B] hover:text-[#2B2B2B]">
+                清除勾選
+              </button>
+            </div>
+            <h3 class="text-base sm:text-lg font-bold text-[#BE123C]">
+              請立即就醫，或立刻與您的醫師／藥師聯繫！
+            </h3>
+            <p class="text-xs sm:text-sm text-[#2B2B2B] leading-relaxed">
+              您勾選的症狀屬於「嚴重出血」或「血管栓塞」危險訊號。就醫時請務必攜帶您的 <strong>Warfarin 用藥紀錄卡</strong>（或藥袋），主動告知急診與醫療人員您正在服用抗凝血劑。
+            </p>
+            <div class="flex flex-wrap items-center gap-3 pt-1">
+              <a href="tel:0289667000,2123" class="px-4 py-2 rounded-xl bg-[#BE123C] text-white text-xs font-bold hover:bg-[#9F1239] transition">
+                聯繫亞東醫院藥物諮詢：(02) 8966-7000 轉 2123
+              </a>
+              <button type="button" onclick="switchTab('tab5')" class="px-3.5 py-2 rounded-xl bg-white border border-[#E2E0D8] text-xs font-bold text-[#2B2B2B] hover:border-[#7F1D1D]">
+                開啟個人用藥紀錄卡 ›
+              </button>
+            </div>
+          </div>
+        `;
+      } else if (hasMildOnly) {
+        bannerEl.innerHTML = `
+          <div class="p-4 rounded-2xl border border-[#7F1D1D] bg-[#7F1D1D]/[0.06] space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="px-2.5 py-0.5 rounded-md bg-[#7F1D1D] text-white text-xs font-bold">
+                輕微局部出血提醒・已勾選 ${selected.length} 項
+              </span>
+              <button type="button" onclick="clearSelectedWarnings()" class="text-xs underline text-[#64748B] hover:text-[#2B2B2B]">
+                清除勾選
+              </button>
+            </div>
+            <p class="text-xs sm:text-sm text-[#2B2B2B] leading-relaxed">
+              若僅為輕微牙齦滲血或短時間可止住的流鼻血，<strong>不必過度驚慌</strong>，建議改用軟毛牙刷並於回診時告知醫師。<strong>但若大量出血或持續流血超過 15–30 分鐘仍未止血，請立即就醫！</strong>
+            </p>
+          </div>
+        `;
+      }
+
+      // 渲染左側：出血危險訊號卡片
+      bleedingGrid.innerHTML = BLEEDING_WARNING_SIGNS.map((item) => {
+        const checked = selected.includes(item.id);
+        const isSevere = item.severity === 'severe';
+        return `
+          <button
+            type="button"
+            onclick="toggleWarningSymptom('${item.id}')"
+            class="w-full text-left p-3.5 rounded-xl border ${
+              checked
+                ? 'border-[#BE123C] bg-[#FFF1F2]/70'
+                : 'border-[#E2E0D8] bg-white hover:border-[#BE123C]'
+            } transition flex items-start gap-3"
+          >
+            <div class="w-8 h-8 rounded-lg ${
+              checked ? 'bg-[#BE123C] text-white' : isSevere ? 'bg-[#FFF1F2] text-[#BE123C]' : 'bg-[#F7F6F2] text-[#7F1D1D]'
+            } flex items-center justify-center shrink-0 mt-0.5">
+              ${getIndicationIcon(item.icon)}
+            </div>
+            <div class="flex-1 min-w-0 space-y-1">
+              <div class="flex flex-wrap items-center justify-between gap-1.5">
+                <span class="text-sm font-bold text-[#2B2B2B]">${item.title}</span>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded ${
+                  isSevere ? 'bg-[#FFF1F2] text-[#BE123C]' : 'bg-[#EFECE6] text-[#2B2B2B]'
+                }">
+                  ${isSevere ? '嚴重・立即就醫' : '輕微觀察／持續則回診'}
+                </span>
+              </div>
+              <p class="text-xs text-[#64748B] leading-relaxed">${item.desc}</p>
+            </div>
+            <div class="w-5 h-5 rounded border ${
+              checked ? 'bg-[#BE123C] border-[#BE123C] text-white' : 'border-[#CFCBC0] bg-[#F7F6F2]'
+            } flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">
+              ${checked ? '✓' : ''}
+            </div>
+          </button>
+        `;
+      }).join('');
+
+      // 渲染右側：栓塞危險訊號卡片
+      clotGrid.innerHTML = CLOT_WARNING_SIGNS.map((item) => {
+        const checked = selected.includes(item.id);
+        return `
+          <button
+            type="button"
+            onclick="toggleWarningSymptom('${item.id}')"
+            class="w-full text-left p-3.5 rounded-xl border ${
+              checked ? 'border-[#7F1D1D] bg-[#7F1D1D]/[0.05]' : 'border-[#E2E0D8] bg-white hover:border-[#7F1D1D]'
+            } transition flex items-start gap-3"
+          >
+            <div class="w-8 h-8 rounded-lg ${
+              checked ? 'bg-[#7F1D1D] text-white' : 'bg-[#EFECE6] text-[#7F1D1D]'
+            } flex items-center justify-center shrink-0 mt-0.5">
+              ${getIndicationIcon(item.icon)}
+            </div>
+            <div class="flex-1 min-w-0 space-y-1">
+              <div class="flex flex-wrap items-center justify-between gap-1.5">
+                <span class="text-sm font-bold text-[#2B2B2B]">${item.title}</span>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-[#7F1D1D]/10 text-[#7F1D1D]">
+                  單側或雙側・立即就醫
+                </span>
+              </div>
+              <p class="text-xs text-[#64748B] leading-relaxed">${item.desc}</p>
+            </div>
+            <div class="w-5 h-5 rounded border ${
+              checked ? 'bg-[#7F1D1D] border-[#7F1D1D] text-white' : 'border-[#CFCBC0] bg-[#F7F6F2]'
+            } flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">
+              ${checked ? '✓' : ''}
+            </div>
+          </button>
+        `;
+      }).join('');
+    }
+
+    // --------------------------------------------------------------------------
+    // 2-E. Phase 5 互動控制器：維生素 K 食物分級與交互作用即時搜尋篩選
+    // --------------------------------------------------------------------------
+    function setDietFilter(filterKey) {
+      APP_STATE.dietFilterCategory = filterKey;
+      document.querySelectorAll('.diet-filter-btn').forEach((btn) => {
+        if (btn.getAttribute('data-diet-filter') === filterKey) {
+          btn.classList.add('bg-[#7F1D1D]', 'text-white', 'border-[#7F1D1D]');
+          btn.classList.remove('bg-white', 'text-[#2B2B2B]', 'border-[#E2E0D8]');
+        } else {
+          btn.classList.remove('bg-[#7F1D1D]', 'text-white', 'border-[#7F1D1D]');
+          btn.classList.add('bg-white', 'text-[#2B2B2B]', 'border-[#E2E0D8]');
+        }
+      });
+      renderDietInteractionList();
+    }
+
+    function onDietSearchInput(val) {
+      APP_STATE.dietSearchQuery = val;
+      renderDietInteractionList();
+    }
+
+    function applyDietQuickKeyword(kw) {
+      APP_STATE.dietSearchQuery = kw;
+      APP_STATE.dietFilterCategory = 'all';
+      const input = document.getElementById('diet-search-input');
+      if (input) input.value = kw;
+      setDietFilter('all');
+    }
+
+    function renderDietInteractionList() {
+      const listEl = document.getElementById('diet-interaction-list');
+      const countEl = document.getElementById('diet-result-count');
+      if (!listEl) return;
+
+      const q = (APP_STATE.dietSearchQuery || '').trim().toLowerCase();
+      const filtered = VITAMIN_K_AND_INTERACTIONS.filter((item) => {
+        const matchCat = APP_STATE.dietFilterCategory === 'all' || item.filterKey === APP_STATE.dietFilterCategory;
+        const matchText =
+          !q ||
+          item.name.toLowerCase().includes(q) ||
+          item.category.toLowerCase().includes(q) ||
+          item.note.toLowerCase().includes(q) ||
+          item.tag.toLowerCase().includes(q);
+        return matchCat && matchText;
+      });
+
+      if (countEl) {
+        countEl.textContent = `符合條件：共 ${filtered.length} 項`;
+      }
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = `
+          <div class="p-6 rounded-xl border border-[#E2E0D8] bg-[#F7F6F2] text-center space-y-2">
+            <div class="text-sm font-bold text-[#2B2B2B]">找不到符合「${escapeHtml(APP_STATE.dietSearchQuery)}」的項目</div>
+            <p class="text-xs text-[#64748B]">未列出的食品、保健品或中草藥，使用前請先諮詢您的醫師或亞東醫院藥師（02-8966-7000 轉 2123）。</p>
+          </div>
+        `;
+        return;
+      }
+
+      listEl.innerHTML = filtered
+        .map((item) => {
+          const badgeClass =
+            item.tagStyle === 'crimson'
+              ? 'bg-[#FFF1F2] text-[#BE123C] border border-[#FECDD3]'
+              : item.tagStyle === 'burgundy'
+              ? 'bg-[#7F1D1D]/10 text-[#7F1D1D] border border-[#7F1D1D]/20'
+              : item.tagStyle === 'teal'
+              ? 'bg-[#E6F4F5] text-[#007A87] border border-[#007A87]/25'
+              : 'bg-[#EFECE6] text-[#2B2B2B] border border-[#E2E0D8]';
+
+          return `
+            <div class="p-4 rounded-xl border border-[#E2E0D8] bg-white hover:border-[#7F1D1D]/50 transition space-y-2">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span class="text-xs font-bold text-[#64748B]">${item.category}</span>
+                <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-md ${badgeClass}">${item.tag}</span>
+              </div>
+              <div class="text-sm font-bold text-[#2B2B2B] leading-snug">${item.name}</div>
+              <p class="text-xs text-[#64748B] leading-relaxed pt-1 border-t border-[#E2E0D8]/70">${item.note}</p>
+            </div>
+          `;
+        })
+        .join('');
+    }
+
+    // --------------------------------------------------------------------------
+    // 2-F. Phase 6 互動控制器：用藥紀錄卡本機儲存、隨身卡 PNG 匯出、列印與雲端備份
+    // --------------------------------------------------------------------------
+    function updateMedCardField(field, value) {
+      APP_STATE.medCard[field] = value;
+      saveMedCardToLocal(false);
+    }
+
+    function updateMedCardWeekRow(rowIndex, key, value) {
+      if (APP_STATE.medCard.weekRows[rowIndex]) {
+        APP_STATE.medCard.weekRows[rowIndex][key] = value;
+        saveMedCardToLocal(false);
+      }
+    }
+
+    function saveMedCardToLocal(notify = true) {
+      localStorage.setItem('warfarin_med_card_v1', JSON.stringify(APP_STATE.medCard));
+      const statusEl = document.getElementById('medcard-save-status');
+      if (statusEl) {
+        statusEl.textContent = `已儲存至本機（${new Date().toLocaleTimeString('zh-TW')}）`;
+      }
+      if (notify) {
+        showToast('用藥紀錄卡已儲存至您的裝置本機（離線亦可檢視）');
+      }
+    }
+
+    function resetMedCardData() {
+      APP_STATE.medCard.weekRows = APP_STATE.medCard.weekRows.map((r) => ({
+        day: r.day,
+        date: '',
+        dose: '',
+        inr: ''
+      }));
+      APP_STATE.medCard.notes = '';
+      saveMedCardToLocal(false);
+      renderTabContent('tab5');
+      showToast('已清空本週劑量與 INR 紀錄');
+    }
+
+    async function syncMedCardToGoogleSheets() {
+      const url = (APP_STATE.medCard.gasWebhookUrl || '').trim();
+      if (!url) {
+        showToast('請先填入您的 Google Apps Script Web App 網址');
+        return;
+      }
+      if (!navigator.onLine) {
+        showToast('目前處於離線狀態，資料已安全儲存在本機，待連線後再同步');
+        return;
+      }
+      try {
+        showToast('正在同步至 Google Sheets...');
+        await fetch(url, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            updatedAt: new Date().toISOString(),
+            ...APP_STATE.medCard
+          })
+        });
+        APP_STATE.medCard.lastSyncedAt = new Date().toLocaleString('zh-TW');
+        saveMedCardToLocal(false);
+        const syncLabel = document.getElementById('gas-sync-time');
+        if (syncLabel) syncLabel.textContent = `最近同步：${APP_STATE.medCard.lastSyncedAt}`;
+        showToast('已送出雲端備份請求至 Google Sheets！');
+      } catch (e) {
+        showToast('雲端同步連線失敗，請確認 Google Apps Script 網址與權限設定');
+      }
+    }
+
+    function exportMedCardAsImage() {
+      try {
+        const c = APP_STATE.medCard;
+        const canvas = document.createElement('canvas');
+        canvas.width = 1000;
+        canvas.height = 680;
+        const ctx = canvas.getContext('2d');
+
+        // 無印暖米白卡片底色
+        ctx.fillStyle = '#F7F6F2';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // 酒紅頂部橫幅
+        ctx.fillStyle = '#7F1D1D';
+        ctx.fillRect(0, 0, canvas.width, 84);
+
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 26px "Noto Sans TC", sans-serif';
+        ctx.fillText('我正在服用抗凝血劑 Warfarin（可化凝錠）', 36, 42);
+        ctx.font = '15px "Noto Sans TC", sans-serif';
+        ctx.fillStyle = 'rgba(255,255,255,0.88)';
+        ctx.fillText('亞東紀念醫院 藥學部「藥找查 105」隨身用藥紀錄卡｜諮詢專線：(02) 8966-7000 轉 2123', 36, 68);
+
+        // 白色內卡片
+        ctx.fillStyle = '#FFFFFF';
+        ctx.strokeStyle = '#E2E0D8';
+        ctx.lineWidth = 2;
+        ctx.fillRect(32, 108, 936, 540);
+        ctx.strokeRect(32, 108, 936, 540);
+
+        // 基本資料欄位
+        ctx.fillStyle = '#2B2B2B';
+        ctx.font = 'bold 18px "Noto Sans TC", sans-serif';
+        ctx.fillText(`姓名：${c.patientName || '（未填寫）'}`, 56, 150);
+        ctx.fillText(`目標 INR：${c.targetInr || '2.0 - 3.0'}`, 380, 150);
+        ctx.fillText(`使用品項：${c.tabletStrength || '可化凝錠'}`, 650, 150);
+
+        ctx.font = '16px "Noto Sans TC", sans-serif';
+        ctx.fillText(`就診醫院：${c.hospitalName || '亞東紀念醫院'}`, 56, 188);
+        ctx.fillText(`主治醫師：${c.doctorName || '—'}`, 380, 188);
+        ctx.fillText(`負責藥師：${c.pharmacistName || '—'}`, 650, 188);
+
+        ctx.fillText(`緊急聯絡人：${c.emergencyContact || '—'}`, 56, 224);
+        ctx.fillText(`緊急聯絡電話：${c.emergencyPhone || '—'}`, 380, 224);
+        ctx.fillText(`醫院電話：${c.hospitalPhone || '(02)8966-7000#2123'}`, 650, 224);
+
+        // 分隔線
+        ctx.strokeStyle = '#E2E0D8';
+        ctx.beginPath();
+        ctx.moveTo(56, 248);
+        ctx.lineTo(944, 248);
+        ctx.stroke();
+
+        // 一週 7 天劑量與 INR 表格
+        const startX = 56;
+        const startY = 272;
+        const colWidths = [110, 111, 111, 111, 111, 111, 111, 112];
+        const headers = ['項目', '週一', '週二', '週三', '週四', '週五', '週六', '週日'];
+        const rowLabels = ['日期', '劑量', 'INR'];
+
+        // 表頭底色
+        ctx.fillStyle = '#EFECE6';
+        ctx.fillRect(startX, startY, 888, 42);
+        ctx.strokeRect(startX, startY, 888, 174);
+
+        ctx.fillStyle = '#2B2B2B';
+        ctx.font = 'bold 16px "Noto Sans TC", sans-serif';
+        let curX = startX;
+        headers.forEach((h, i) => {
+          ctx.fillText(h, curX + 14, startY + 27);
+          if (i > 0) {
+            ctx.beginPath();
+            ctx.moveTo(curX, startY);
+            ctx.lineTo(curX, startY + 174);
+            ctx.stroke();
+          }
+          curX += colWidths[i];
+        });
+
+        rowLabels.forEach((label, rIdx) => {
+          const yTop = startY + 42 + rIdx * 44;
+          ctx.beginPath();
+          ctx.moveTo(startX, yTop);
+          ctx.lineTo(startX + 888, yTop);
+          ctx.stroke();
+
+          ctx.font = 'bold 15px "Noto Sans TC", sans-serif';
+          ctx.fillStyle = '#7F1D1D';
+          ctx.fillText(label, startX + 14, yTop + 28);
+
+          ctx.font = '15px "Noto Sans TC", sans-serif';
+          ctx.fillStyle = '#2B2B2B';
+          let cellX = startX + colWidths[0];
+          c.weekRows.forEach((row, dIdx) => {
+            const val = rIdx === 0 ? row.date : rIdx === 1 ? row.dose : row.inr;
+            ctx.fillText(val || '—', cellX + 12, yTop + 28);
+            cellX += colWidths[dIdx + 1];
+          });
+        });
+
+        // 緊急醫療提示與筆記
+        ctx.fillStyle = '#FFF1F2';
+        ctx.fillRect(56, 472, 888, 72);
+        ctx.strokeStyle = '#FECDD3';
+        ctx.strokeRect(56, 472, 888, 72);
+        ctx.fillStyle = '#BE123C';
+        ctx.font = 'bold 16px "Noto Sans TC", sans-serif';
+        ctx.fillText('【醫療人員重要提示】本病人正在服用口服抗凝血劑 Warfarin，進行手術、拔牙或侵入性檢查前請務必評估停藥時機。', 72, 502);
+        ctx.fillStyle = '#2B2B2B';
+        ctx.font = '14px "Noto Sans TC", sans-serif';
+        ctx.fillText(`個人備註：${c.notes || '每天固定時間服藥，若出現嚴重出血或栓塞症狀請立即就醫。'}`, 72, 528);
+
+        // 觸發下載圖檔
+        const link = document.createElement('a');
+        link.download = `Warfarin_用藥紀錄卡_${c.patientName || '個人随身卡'}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast('已生成「Warfarin 隨身用藥紀錄卡」圖片並開始下載！');
+      } catch (err) {
+        showToast('圖檔生成失敗，建議改用「A4 列印／另存 PDF」功能');
+      }
+    }
+
+    // --------------------------------------------------------------------------
+    // 3. 分頁內容渲染引擎（按需渲染當前選中分頁，保持畫面輕快與流暢）
+    // --------------------------------------------------------------------------
+    function renderTabContent(tabId) {
+      const container = document.getElementById('dynamic-tab-content');
+      const heroBanner = document.getElementById('hero-overview-banner');
+      container.classList.remove('tab-panel-animate');
+      void container.offsetWidth;
+      container.classList.add('tab-panel-animate');
+
+      // 僅在首頁總覽顯示 Hero 橫幅；點選 1~5 分頁時隱藏 Hero 並附上返回首頁列，避免畫面過長
+      if (tabId === 'overview') {
+        if (heroBanner) heroBanner.classList.remove('hidden');
+        container.innerHTML = `
+          <section class="bg-white border border-[#E2E0D8] rounded-2xl p-4 sm:p-6 space-y-4">
+            <div class="pb-3 border-b border-[#E2E0D8] space-y-1">
+              <h2 class="text-base sm:text-lg font-bold text-[#2B2B2B] leading-snug">完整衛教手冊章節目錄（點擊即切換至該專屬頁面）</h2>
+              <p class="text-xs text-[#64748B]">每次僅展開單一主題，頁面精簡清晰、不需長距離捲動</p>
+            </div>
+            <div class="mobile-single-col grid grid-cols-1 md:grid-cols-2 gap-3">
+              <button type="button" onclick="switchTab('tab1')" class="block w-full min-w-0 text-left p-4 rounded-xl border border-[#E2E0D8] hover:border-[#007A87] bg-[#F7F6F2]/50 hover:bg-white transition space-y-1">
+                <div class="text-xs font-bold text-[#007A87]">01｜認識藥物與外觀</div>
+                <div class="text-sm font-bold text-[#2B2B2B] leading-snug">認識 Warfarin、INR 互動模擬與 10 款錠劑刻痕辨識 ›</div>
+              </button>
+              <button type="button" onclick="switchTab('tab2')" class="block w-full min-w-0 text-left p-4 rounded-xl border border-[#E2E0D8] hover:border-[#7F1D1D] bg-[#F7F6F2]/50 hover:bg-white transition space-y-1">
+                <div class="text-xs font-bold text-[#7F1D1D]">02｜服藥時間管理</div>
+                <div class="text-sm font-bold text-[#2B2B2B] leading-snug">忘記服藥「12 小時法則」試算器與動態時間軸動畫 ›</div>
+              </button>
+              <button type="button" onclick="switchTab('tab3')" class="block w-full min-w-0 text-left p-4 rounded-xl border border-[#E2E0D8] hover:border-[#BE123C] bg-[#F7F6F2]/50 hover:bg-white transition space-y-1">
+                <div class="text-xs font-bold text-[#BE123C]">03｜副作用與緊急警訊</div>
+                <div class="text-sm font-bold text-[#2B2B2B] leading-snug">出血（10 項）與栓塞（8 項）危險訊號自我檢核表 ›</div>
+              </button>
+              <button type="button" onclick="switchTab('tab4')" class="block w-full min-w-0 text-left p-4 rounded-xl border border-[#E2E0D8] hover:border-[#007A87] bg-[#F7F6F2]/50 hover:bg-white transition space-y-1">
+                <div class="text-xs font-bold text-[#007A87]">04｜飲食與交互作用</div>
+                <div class="text-sm font-bold text-[#2B2B2B] leading-snug">飯碗定量圖解、維生素 K 食物分級與保健品/中草藥查詢 ›</div>
+              </button>
+              <button type="button" onclick="switchTab('tab5')" class="block w-full min-w-0 md:col-span-2 text-left p-4 rounded-xl border border-[#E2E0D8] hover:border-[#7F1D1D] bg-[#F7F6F2]/50 hover:bg-white transition space-y-1">
+                <div class="text-xs font-bold text-[#7F1D1D]">05｜居家照護與隨身紀錄</div>
+                <div class="text-sm font-bold text-[#2B2B2B] leading-snug">懷孕哺乳禁忌、生活安全守則與可下載/列印之 Warfarin 用藥紀錄卡 ›</div>
+              </button>
+            </div>
+          </section>
+        `;
+        return;
+      }
+
+      if (heroBanner) heroBanner.classList.add('hidden');
+
+      const backToHomeBar = `
+        <div class="mobile-stack-col flex items-center justify-between gap-2 bg-white border border-[#E2E0D8] rounded-xl px-4 py-2.5 no-print">
+          <button type="button" onclick="switchTab('overview')" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#7F1D1D] hover:underline">
+            <span>← 回到首頁總覽（INR 概念尺與快速情境）</span>
+          </button>
+          <span class="text-[11px] text-[#64748B]">目前檢視：${TAB_META[tabId]?.title || '獨立分頁'}</span>
+        </div>
+      `;
+
+      if (tabId === 'tab1') {
+        const isMobile = isCompactMobileView();
+        const showMech = !isMobile || APP_STATE.mobileAccordions.tab1Mechanism;
+        const showInd = !isMobile || APP_STATE.mobileAccordions.tab1Indications;
+        container.innerHTML = backToHomeBar + `
+          <div class="space-y-5">
+            <!-- 區塊 A-1：Warfarin 作用機轉（手機版可收合，保留版面呼吸感） -->
+            <section class="bg-white border border-[#E2E0D8] rounded-2xl p-4 sm:p-6 space-y-4">
+              <div class="space-y-1">
+                <span class="text-xs font-bold text-[#007A87]">分頁 01｜認識藥物與規格外觀辨識</span>
+                <h2 class="text-lg sm:text-xl font-bold text-[#2B2B2B]">為什麼醫師要開 Warfarin 給我？</h2>
+              </div>
+              ${buildAccordionHeader(
+                'tab1Mechanism',
+                '藥物作用機轉與起效時間',
+                '阻斷肝臟利用維生素 K・起效需數天',
+                '每日固定時間服用',
+                'bg-[#E6F4F5] text-[#007A87]'
+              )}
+              ${
+                showMech
+                  ? `
+                <div class="mobile-single-col grid grid-cols-1 md:grid-cols-2 gap-3.5 text-sm pt-1">
+                  <div class="p-4 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] space-y-1.5">
+                    <div class="font-bold text-[#7F1D1D]">抑制血液凝固・預防血栓形成</div>
+                    <p class="text-[#2B2B2B] leading-relaxed">
+                      維生素 K 是活化人體血液凝固的重要成分，Warfarin 會<strong>阻斷肝臟對維生素 K 的利用</strong>，減少血塊形成並防止既有血栓擴大，進而預防中風與血管栓塞。
+                    </p>
+                  </div>
+                  <div class="p-4 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] space-y-1.5">
+                    <div class="font-bold text-[#007A87]">起效需數天・個人化劑量調整</div>
+                    <p class="text-[#2B2B2B] leading-relaxed">
+                      Warfarin 的起效時間較長，服用後<strong>需要數天的時間</strong>才會達到最大抗凝血藥效；每個人所需劑量不同，醫師會依據每次抽血的 <strong>INR 數值</strong>微調劑量。
+                    </p>
+                  </div>
+                </div>
+              `
+                  : ''
+              }
+            </section>
+
+            <!-- 區塊 A-2：7 大臨床適應症（手機版手風琴折疊，預設收合避免過長） -->
+            <section class="bg-white border border-[#E2E0D8] rounded-2xl p-4 sm:p-6 space-y-3.5">
+              ${buildAccordionHeader(
+                'tab1Indications',
+                '臨床常見需要使用抗凝血藥品的情況',
+                '心房纖維顫動、瓣膜置換、中風、靜脈栓塞等',
+                '共 7 大類',
+                'bg-[#EFECE6] text-[#7F1D1D]'
+              )}
+              ${
+                showInd
+                  ? `
+                <div class="mobile-single-col grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-1">
+                  ${WARFARIN_INDICATIONS.map(
+                    (ind) => `
+                    <div class="p-3.5 rounded-xl border border-[#E2E0D8] bg-white flex items-start gap-3">
+                      <div class="w-8 h-8 rounded-lg bg-[#EFECE6] text-[#7F1D1D] flex items-center justify-center shrink-0 mt-0.5">
+                        ${getIndicationIcon(ind.icon)}
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <div class="text-sm font-bold text-[#2B2B2B]">${ind.title}</div>
+                        <p class="text-xs text-[#64748B] mt-0.5 leading-relaxed">${ind.desc}</p>
+                      </div>
+                    </div>
+                  `
+                  ).join('')}
+                </div>
+              `
+                  : ''
+              }
+            </section>
+
+            <!-- 區塊 B：互動式 INR 抗凝血數值模擬體驗器（手機版自動上下堆疊標題與按鈕，杜絕標題被擠成直條） -->
+            <section class="bg-white border border-[#E2E0D8] rounded-2xl p-4 sm:p-6 space-y-4">
+              <div class="mobile-stack-col flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-[#E2E0D8]">
+                <div class="min-w-0 flex-1">
+                  <h3 class="text-base sm:text-lg font-bold text-[#2B2B2B] leading-snug">互動體驗：為什麼每次回診都要抽血測 INR？</h3>
+                  <p class="text-xs text-[#64748B] mt-1 leading-relaxed">拖動下方滑桿或點選情境按鈕，了解 INR 偏低、達標與偏高時的臨床意義</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <button type="button" onclick="updateInrSimulator(1.3)" class="px-2.5 py-1.5 rounded-lg border border-[#E2E0D8] bg-white text-[#2B2B2B] text-xs font-semibold hover:bg-[#F7F6F2] whitespace-nowrap transition">模擬偏低 1.3</button>
+                  <button type="button" onclick="updateInrSimulator(2.5)" class="px-2.5 py-1.5 rounded-lg border border-[#007A87] bg-[#E6F4F5] text-[#007A87] text-xs font-bold whitespace-nowrap transition">模擬達標 2.5</button>
+                  <button type="button" onclick="updateInrSimulator(4.1)" class="px-2.5 py-1.5 rounded-lg border border-[#FECDD3] bg-[#FFF1F2] text-[#BE123C] text-xs font-semibold whitespace-nowrap transition">模擬偏高 4.1</button>
+                </div>
+              </div>
+
+              <!-- 互動 INR 滑桿與即時數值顯示 -->
+              <div class="p-4 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] space-y-3">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-xs font-bold text-[#64748B]">調整模擬抽血 INR 數值：</span>
+                  <div class="flex items-baseline gap-1.5 shrink-0">
+                    <span class="text-xs text-[#64748B]">目前模擬值</span>
+                    <span id="sim-inr-val" class="text-xl font-bold text-[#007A87]">2.5</span>
+                  </div>
+                </div>
+                <input
+                  id="sim-inr-slider"
+                  type="range"
+                  min="1.0"
+                  max="5.0"
+                  step="0.1"
+                  value="${APP_STATE.simulatedInr}"
+                  oninput="updateInrSimulator(this.value)"
+                  class="w-full accent-[#7F1D1D] cursor-pointer"
+                  aria-label="INR 抗凝血數值模擬滑桿"
+                />
+                <div class="grid grid-cols-3 gap-1 text-[11px] font-semibold text-[#64748B]">
+                  <span class="text-left">1.0（偏低・血栓）</span>
+                  <span class="text-center text-[#007A87]">2.0–3.0（達標）</span>
+                  <span class="text-right text-[#BE123C]">4.0+（偏高・出血）</span>
+                </div>
+              </div>
+
+              <!-- 動態臨床解讀卡片 -->
+              <div id="sim-inr-status"></div>
+            </section>
+
+            <!-- 區塊 C：台灣常見各廠牌 Warfarin 錠劑規格外觀對照（預設僅顯示亞東常備可化凝錠，他廠收合） -->
+            <section class="bg-white border border-[#E2E0D8] rounded-2xl p-4 sm:p-6 space-y-4">
+              <div class="mobile-stack-col flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-[#E2E0D8]">
+                <div class="min-w-0 flex-1">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h3 class="text-base sm:text-lg font-bold text-[#2B2B2B]">Warfarin 錠劑規格與雙面外觀辨識</h3>
+                    <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-[#7F1D1D] text-white">預設顯示：亞東常備品項</span>
+                  </div>
+                  <p class="text-xs text-[#64748B] mt-1 leading-relaxed">領藥時請核對劑量與刻痕；可點選「標記使用 (V)」記錄您目前服用的規格</p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onclick="toggleOtherBrandsPanel()"
+                    class="w-full sm:w-auto px-3 py-2 rounded-lg border border-[#E2E0D8] bg-[#F7F6F2] hover:border-[#7F1D1D] text-xs font-bold text-[#2B2B2B] transition text-center"
+                  >
+                    ${APP_STATE.showOtherBrands ? '▲ 收合他廠規格（僅看本院）' : '＋ 展開他廠常見 Warfarin 規格 (8款)'}
+                  </button>
+                </div>
+              </div>
+
+              ${
+                APP_STATE.showOtherBrands
+                  ? `
+                <div class="flex flex-wrap items-center gap-1.5 pb-1">
+                  <button type="button" data-brand="all" onclick="filterTabletBrand('all')" class="brand-filter-btn px-3 py-1.5 rounded-lg border border-[#7F1D1D] bg-[#7F1D1D] text-white text-xs font-bold transition">全部廠牌 (10)</button>
+                  <button type="button" data-brand="cofarin" onclick="filterTabletBrand('cofarin')" class="brand-filter-btn px-3 py-1.5 rounded-lg border border-[#E2E0D8] bg-white text-[#2B2B2B] text-xs font-semibold transition">可化凝 Cofarin® (2)</button>
+                  <button type="button" data-brand="mafarin" onclick="filterTabletBrand('mafarin')" class="brand-filter-btn px-3 py-1.5 rounded-lg border border-[#E2E0D8] bg-white text-[#2B2B2B] text-xs font-semibold transition">脈化寧 Mafarin® (3)</button>
+                  <button type="button" data-brand="uwarin" onclick="filterTabletBrand('uwarin')" class="brand-filter-btn px-3 py-1.5 rounded-lg border border-[#E2E0D8] bg-white text-[#2B2B2B] text-xs font-semibold transition">瓦寧 Uwarin® (3)</button>
+                  <button type="button" data-brand="orfarin" onclick="filterTabletBrand('orfarin')" class="brand-filter-btn px-3 py-1.5 rounded-lg border border-[#E2E0D8] bg-white text-[#2B2B2B] text-xs font-semibold transition">歐服寧 Orfarin® (2)</button>
+                </div>
+              `
+                  : ''
+              }
+
+              <div id="tablet-cards-grid" class="mobile-single-col grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            </section>
+          </div>
+        ` + buildTabStepperFooter('tab1');
+        updateInrSimulator(APP_STATE.simulatedInr);
+        if (APP_STATE.showOtherBrands) {
+          filterTabletBrand(APP_STATE.tabletBrandFilter);
+        } else {
+          renderTabletGrid();
+        }
+        return;
+      }
+
+      if (tabId === 'tab2') {
+        const isMobile = isCompactMobileView();
+        const showRules = !isMobile || APP_STATE.mobileAccordions.tab2Rules;
+        container.innerHTML = backToHomeBar + `
+          <div class="space-y-5">
+            <!-- 區塊 A：規律服藥 4 大安全守則（手機版手風琴收合，優先露出 12h 計算器） -->
+            <section class="bg-white border border-[#E2E0D8] rounded-2xl p-4 sm:p-6 space-y-3.5">
+              <div class="space-y-1">
+                <span class="text-xs font-bold text-[#7F1D1D]">分頁 02｜何時服用與忘記服藥處理</span>
+                <h2 class="text-lg sm:text-xl font-bold text-[#2B2B2B]">忘記服藥「12 小時法則」互動判斷器</h2>
+              </div>
+              ${buildAccordionHeader(
+                'tab2Rules',
+                '規律服藥 4 大日常安全守則',
+                '固定時間服藥、不自行停藥、核對藥袋、善用藥盒',
+                '4 項原則',
+                'bg-[#7F1D1D]/10 text-[#7F1D1D]'
+              )}
+              ${
+                showRules
+                  ? `
+                <div class="mobile-single-col grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs pt-1">
+                  <div class="p-3.5 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] space-y-1">
+                    <div class="font-bold text-[#7F1D1D]">1. 每天固定時間服藥</div>
+                    <p class="text-[#64748B] leading-relaxed">空腹或飯後隨餐均可，重點是每天固定同一時段服用。</p>
+                  </div>
+                  <div class="p-3.5 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] space-y-1">
+                    <div class="font-bold text-[#7F1D1D]">2. 不可自行增減或停藥</div>
+                    <p class="text-[#64748B] leading-relaxed">未經醫師指示，切勿自行調整顆數或突然停藥。</p>
+                  </div>
+                  <div class="p-3.5 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] space-y-1">
+                    <div class="font-bold text-[#007A87]">3. 回診抽血核對藥袋</div>
+                    <p class="text-[#64748B] leading-relaxed">醫師會依 INR 調整劑量，每次領藥前務必看清藥袋標示。</p>
+                  </div>
+                  <div class="p-3.5 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] space-y-1">
+                    <div class="font-bold text-[#007A87]">4. 善用藥盒與紀錄卡</div>
+                    <p class="text-[#64748B] leading-relaxed">使用分格藥盒並搭配用藥紀錄卡註記，避免重複或漏服。</p>
+                  </div>
+                </div>
+              `
+                  : ''
+              }
+            </section>
+
+            <!-- 區塊 B：兩步驟時間輸入 ＋ 連續漏服防呆 ＋ 動態時間軸動畫 -->
+            <section class="bg-white border border-[#E2E0D8] rounded-2xl p-4 sm:p-6 space-y-5">
+              <div class="mobile-stack-col flex flex-col md:flex-row md:items-center justify-between gap-2.5 pb-3 border-b border-[#E2E0D8]">
+                <h3 class="text-base sm:text-lg font-bold text-[#2B2B2B]">輸入服藥時間，立即計算今日補服建議</h3>
+                <div class="flex flex-wrap items-center gap-1.5 text-xs">
+                  <span class="text-[#64748B]">手冊範例（09:00 吃藥）：</span>
+                  <button type="button" onclick="setMissedDosePreset('09:00', '16:00', false)" class="px-2.5 py-1 rounded-lg bg-[#E6F4F5] text-[#007A87] font-bold hover:opacity-90">
+                    16:00 發現（12h 內）
+                  </button>
+                  <button type="button" onclick="setMissedDosePreset('09:00', '21:30', false)" class="px-2.5 py-1 rounded-lg bg-[#FFF1F2] text-[#BE123C] font-bold hover:opacity-90">
+                    21:30 發現（逾 12h）
+                  </button>
+                </div>
+              </div>
+
+              <div class="mobile-single-col grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                <div class="space-y-1.5">
+                  <label for="missed-sched-input" class="block text-xs font-bold text-[#2B2B2B]">
+                    步驟 1：平日固定幾點吃藥？
+                  </label>
+                  <input
+                    id="missed-sched-input"
+                    type="time"
+                    value="${APP_STATE.scheduledTime}"
+                    onchange="onMissedDoseInputChange()"
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] text-sm font-bold text-[#2B2B2B] focus:outline-none focus:border-[#7F1D1D] focus:bg-white"
+                  />
+                  <div class="flex items-center gap-1.5 pt-1 text-[11px]">
+                    <button type="button" onclick="setMissedDosePreset('09:00', APP_STATE.discoveryTime, APP_STATE.missedMultipleOrUnsure)" class="px-2 py-0.5 rounded bg-[#EFECE6] hover:bg-[#E2E0D8] text-[#2B2B2B]">預設早上 09:00</button>
+                    <button type="button" onclick="setMissedDosePreset('21:00', APP_STATE.discoveryTime, APP_STATE.missedMultipleOrUnsure)" class="px-2 py-0.5 rounded bg-[#EFECE6] hover:bg-[#E2E0D8] text-[#2B2B2B]">預設晚上 21:00</button>
+                  </div>
+                </div>
+
+                <div class="space-y-1.5">
+                  <label for="missed-disc-input" class="block text-xs font-bold text-[#2B2B2B]">
+                    步驟 2：現在發現（想起）的時間？
+                  </label>
+                  <input
+                    id="missed-disc-input"
+                    type="time"
+                    value="${APP_STATE.discoveryTime}"
+                    onchange="onMissedDoseInputChange()"
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] text-sm font-bold text-[#2B2B2B] focus:outline-none focus:border-[#7F1D1D] focus:bg-white"
+                  />
+                  <div class="pt-1 text-[11px]">
+                    <button type="button" onclick="setMissedDosePreset(APP_STATE.scheduledTime, getCurrentHHMM(), APP_STATE.missedMultipleOrUnsure)" class="px-2 py-0.5 rounded bg-[#EFECE6] hover:bg-[#E2E0D8] text-[#2B2B2B]">帶入現在系統時間</button>
+                  </div>
+                </div>
+
+                <div class="p-3.5 rounded-xl border border-[#FECDD3] bg-[#FFF1F2]/50 space-y-1.5">
+                  <label class="flex items-start gap-2.5 cursor-pointer">
+                    <input
+                      id="missed-unsure-check"
+                      type="checkbox"
+                      ${APP_STATE.missedMultipleOrUnsure ? 'checked' : ''}
+                      onchange="onMissedDoseInputChange()"
+                      class="mt-0.5 w-4 h-4 accent-[#BE123C]"
+                    />
+                    <span class="text-xs font-bold text-[#BE123C] leading-snug">
+                      已連續忘記超過 2 次，或不確定上次是否吃過
+                    </span>
+                  </label>
+                  <p class="text-[11px] text-[#64748B] pl-6">勾選後將鎖定補服建議並提示聯繫醫師或藥師。</p>
+                </div>
+              </div>
+
+              <!-- 動態判斷結果與動畫時間軸容器 -->
+              <div id="missed-dose-result"></div>
+            </section>
+          </div>
+        ` + buildTabStepperFooter('tab2');
+        updateMissedDoseCalculator();
+        return;
+      }
+
+      if (tabId === 'tab3') {
+        container.innerHTML = backToHomeBar + `
+          <div class="space-y-5">
+            <section class="bg-white border border-[#E2E0D8] rounded-2xl p-4 sm:p-6 space-y-5">
+              <div class="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-[#E2E0D8]">
+                <div>
+                  <span class="text-xs font-bold text-[#BE123C]">分頁 03｜副作用與血栓警訊自我檢核</span>
+                  <h2 class="text-lg sm:text-xl font-bold text-[#2B2B2B] mt-0.5">出血與栓塞「危險訊號」快速檢核表</h2>
+                </div>
+                <span class="text-xs px-2.5 py-1 rounded-md bg-[#FFF1F2] text-[#BE123C] font-bold">
+                  出現嚴重訊號請立即就醫或聯繫醫師／藥師
+                </span>
+              </div>
+
+              <!-- 動態分流行動橫幅 -->
+              <div id="warning-triage-banner"></div>
+
+              <!-- 雙欄對照檢核網格：左欄出血訊號 / 右欄栓塞訊號 -->
+              <div class="mobile-single-col grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between pb-2 border-b border-[#BE123C]/30">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-[#BE123C]"></span>
+                      <h3 class="text-base font-bold text-[#BE123C]">出血的危險訊號（藥效可能過強）</h3>
+                    </div>
+                    <span class="text-xs text-[#64748B]">共 10 項</span>
+                  </div>
+                  <div id="bleeding-signs-grid" class="space-y-2.5"></div>
+                </div>
+
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between pb-2 border-b border-[#7F1D1D]/30">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-[#7F1D1D]"></span>
+                      <h3 class="text-base font-bold text-[#7F1D1D]">栓塞的危險訊號（藥效可能不足）</h3>
+                    </div>
+                    <span class="text-xs text-[#64748B]">共 8 項</span>
+                  </div>
+                  <div id="clot-signs-grid" class="space-y-2.5"></div>
+                </div>
+              </div>
+            </section>
+          </div>
+        ` + buildTabStepperFooter('tab3');
+        renderWarningModule();
+        return;
+      }
+
+      if (tabId === 'tab4') {
+        container.innerHTML = backToHomeBar + `
+          <div class="space-y-5">
+            <!-- 區塊 A：飯碗定量穩定攝取核心原則與扁平化 SVG 圖解 -->
+            <section class="bg-white border border-[#E2E0D8] rounded-2xl p-4 sm:p-6 space-y-5">
+              <div class="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-[#E2E0D8]">
+                <div>
+                  <span class="text-xs font-bold text-[#007A87]">分頁 04｜飲食維生素 K 分級與交互作用搜尋</span>
+                  <h2 class="text-lg sm:text-xl font-bold text-[#2B2B2B] mt-0.5">維生素 K 食物含量與藥品／保健品／中草藥交互作用</h2>
+                </div>
+                <span class="text-xs px-2.5 py-1 rounded-md bg-[#E6F4F5] text-[#007A87] font-bold">
+                  關鍵原則：每日固定份量攝取・避免忽多忽少
+                </span>
+              </div>
+
+              <!-- 定量飯碗扁平視覺圖解 -->
+              <div class="mobile-single-col p-4 sm:p-5 rounded-2xl bg-[#F7F6F2] border border-[#E2E0D8] grid grid-cols-1 md:grid-cols-3 gap-5 items-center">
+                <div class="flex items-center justify-center bg-white border border-[#E2E0D8] rounded-xl p-4">
+                  <svg width="210" height="110" viewBox="0 0 210 110" aria-label="每餐以飯碗定量攝取維生素K概念圖">
+                    <!-- 左碗：每日固定 -->
+                    <g transform="translate(22, 18)">
+                      <path d="M8 32 H68 C68 54 54 68 38 68 C22 68 8 54 8 32 Z" fill="#E6F4F5" stroke="#007A87" stroke-width="2" />
+                      <line x1="22" y1="72" x2="54" y2="72" stroke="#007A87" stroke-width="2.5" stroke-linecap="round" />
+                      <path d="M22 30 Q30 16 38 30 Q46 16 54 30" fill="none" stroke="#007A87" stroke-width="2" stroke-linecap="round" />
+                      <text x="38" y="88" text-anchor="middle" fill="#007A87" font-size="10" font-weight="700">平日固定 1 碗</text>
+                    </g>
+                    <!-- 等號 -->
+                    <text x="105" y="56" text-anchor="middle" fill="#7F1D1D" font-size="16" font-weight="700">≈</text>
+                    <!-- 右碗：每日固定 -->
+                    <g transform="translate(114, 18)">
+                      <path d="M8 32 H68 C68 54 54 68 38 68 C22 68 8 54 8 32 Z" fill="#E6F4F5" stroke="#007A87" stroke-width="2" />
+                      <line x1="22" y1="72" x2="54" y2="72" stroke="#007A87" stroke-width="2.5" stroke-linecap="round" />
+                      <path d="M22 30 Q30 16 38 30 Q46 16 54 30" fill="none" stroke="#007A87" stroke-width="2" stroke-linecap="round" />
+                      <text x="38" y="88" text-anchor="middle" fill="#007A87" font-size="10" font-weight="700">每天維持定量</text>
+                    </g>
+                  </svg>
+                </div>
+
+                <div class="md:col-span-2 space-y-2 text-xs sm:text-sm">
+                  <div class="font-bold text-[#2B2B2B]">不是完全不能吃綠色蔬菜，而是「每天維持固定攝取量」！</div>
+                  <p class="text-[#64748B] leading-relaxed">
+                    維生素 K 是人體血液凝固的重要成分，Warfarin 透過阻斷肝臟利用維生素 K 來發揮藥效。若突然大量吃深綠色蔬菜或內臟會<strong>降低藥效（增加血栓風險）</strong>；若突然完全不吃則可能<strong>增強藥效（增加出血風險）</strong>。建議以「家用飯碗」作為定量工具，每餐維持穩定份量；若準備<strong>減重、改吃素食或大幅改變飲食</strong>，請務必先告知醫師或藥師。
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 區塊 B：即時搜尋 ＋ 7 大分級與交互作用篩選器 -->
+            <section class="bg-white border border-[#E2E0D8] rounded-2xl p-4 sm:p-6 space-y-4">
+              <div class="mobile-stack-col flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#E2E0D8]">
+                <div>
+                  <h3 class="text-base sm:text-lg font-bold text-[#2B2B2B]">食物維生素 K 含量與交互作用即時搜尋</h3>
+                  <p class="text-xs text-[#64748B]">支援搜尋常見食物（每 100g 含量分級）、濃縮保健品、中草藥與併服西藥</p>
+                </div>
+                <span id="diet-result-count" class="text-xs font-bold text-[#7F1D1D]"></span>
+              </div>
+
+              <!-- 搜尋框與熱門關鍵字 -->
+              <div class="space-y-2.5">
+                <div class="relative">
+                  <input
+                    id="diet-search-input"
+                    type="text"
+                    value="${escapeHtml(APP_STATE.dietSearchQuery)}"
+                    oninput="onDietSearchInput(this.value)"
+                    placeholder="輸入食物、保健品或中藥名稱（例如：菠菜、花椰菜、魚油、蔓越莓、當歸、人蔘、納豆...）"
+                    class="w-full pl-4 pr-10 py-3 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] text-sm text-[#2B2B2B] placeholder-[#64748B] focus:outline-none focus:border-[#7F1D1D] focus:bg-white transition"
+                  />
+                  <svg class="w-4 h-4 text-[#64748B] absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none flat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                  </svg>
+                </div>
+
+                <!-- 熱門快捷標籤 -->
+                <div class="flex flex-wrap items-center gap-1.5 text-xs">
+                  <span class="text-[#64748B]">熱門查詢：</span>
+                  ${['菠菜', '青花菜', '豆腐', '魚油', '蔓越莓', '當歸', '人蔘', '維生素C']
+                    .map(
+                      (kw) => `
+                    <button type="button" onclick="applyDietQuickKeyword('${kw}')" class="px-2.5 py-1 rounded-md bg-[#EFECE6] hover:bg-[#E2E0D8] text-[#2B2B2B] font-medium transition">
+                      ${kw}
+                    </button>
+                  `
+                    )
+                    .join('')}
+                </div>
+
+                <!-- 7 大分類濾鏡膠囊 -->
+                <div class="flex flex-wrap items-center gap-1.5 pt-1">
+                  <button type="button" data-diet-filter="all" onclick="setDietFilter('all')" class="diet-filter-btn px-3 py-1.5 rounded-lg border border-[#7F1D1D] bg-[#7F1D1D] text-white text-xs font-bold transition">全部項目 (23)</button>
+                  <button type="button" data-diet-filter="vk-high" onclick="setDietFilter('vk-high')" class="diet-filter-btn px-3 py-1.5 rounded-lg border border-[#E2E0D8] bg-white text-[#2B2B2B] text-xs font-semibold transition">高維生素K (>100μg)</button>
+                  <button type="button" data-diet-filter="vk-med" onclick="setDietFilter('vk-med')" class="diet-filter-btn px-3 py-1.5 rounded-lg border border-[#E2E0D8] bg-white text-[#2B2B2B] text-xs font-semibold transition">中維生素K (30–100μg)</button>
+                  <button type="button" data-diet-filter="vk-low" onclick="setDietFilter('vk-low')" class="diet-filter-btn px-3 py-1.5 rounded-lg border border-[#E2E0D8] bg-white text-[#2B2B2B] text-xs font-semibold transition">低維生素K (<30μg)</button>
+                  <button type="button" data-diet-filter="enhance" onclick="setDietFilter('enhance')" class="diet-filter-btn px-3 py-1.5 rounded-lg border border-[#E2E0D8] bg-white text-[#2B2B2B] text-xs font-semibold transition">↑ 增強藥效（出血風險）</button>
+                  <button type="button" data-diet-filter="reduce" onclick="setDietFilter('reduce')" class="diet-filter-btn px-3 py-1.5 rounded-lg border border-[#E2E0D8] bg-white text-[#2B2B2B] text-xs font-semibold transition">↓ 降低藥效（血栓風險）</button>
+                  <button type="button" data-diet-filter="drugs" onclick="setDietFilter('drugs')" class="diet-filter-btn px-3 py-1.5 rounded-lg border border-[#E2E0D8] bg-white text-[#2B2B2B] text-xs font-semibold transition">併服西藥提醒</button>
+                </div>
+              </div>
+
+              <!-- 篩選結果列表 -->
+              <div id="diet-interaction-list" class="space-y-3 pt-2"></div>
+            </section>
+          </div>
+        ` + buildTabStepperFooter('tab4');
+        setDietFilter(APP_STATE.dietFilterCategory);
+        return;
+      }
+
+      if (tabId === 'tab5') {
+        const mc = APP_STATE.medCard;
+        const isMobile = isCompactMobileView();
+        const showPreg = !isMobile || APP_STATE.mobileAccordions.tab5Pregnancy;
+        const showSafety = !isMobile || APP_STATE.mobileAccordions.tab5Safety;
+        container.innerHTML = backToHomeBar + `
+          <div class="space-y-5">
+            <!-- 區塊 A：懷孕與哺乳婦女特別注意事項（手機版手風琴收合，優先呈現用藥紀錄卡） -->
+            <section class="bg-white border border-[#E2E0D8] rounded-2xl p-4 sm:p-6 space-y-4 no-print">
+              <div class="space-y-1">
+                <span class="text-xs font-bold text-[#7F1D1D]">分頁 05｜生活安全、懷孕哺乳與個人紀錄卡</span>
+                <h2 class="text-lg sm:text-xl font-bold text-[#2B2B2B]">懷孕／哺乳須知與日常生活安全守則</h2>
+              </div>
+
+              <!-- 懷孕與哺乳 4 項重點 -->
+              <div class="p-4 rounded-2xl border border-[#FECDD3] bg-[#FFF1F2]/50 space-y-3">
+                ${buildAccordionHeader(
+                  'tab5Pregnancy',
+                  '懷孕或哺乳婦女特別注意事項',
+                  '孕期禁忌、停藥後避孕 1 個月、哺乳風險評估',
+                  '懷孕婦女禁用',
+                  'bg-[#BE123C] text-white'
+                )}
+                ${
+                  showPreg
+                    ? `
+                  <div class="mobile-single-col grid grid-cols-1 md:grid-cols-2 gap-3 text-xs sm:text-sm pt-1">
+                    <div class="p-3.5 rounded-xl bg-white border border-[#E2E0D8]">
+                      <div class="font-bold text-[#BE123C]">1. 懷孕婦女禁用（致畸胎風險已確定）</div>
+                      <p class="text-[#64748B] mt-1 leading-relaxed">本藥品懷孕使用風險已經確定，禁用於懷孕婦女。若計畫懷孕、可能懷孕或服藥期間發現懷孕，請立即告知醫師進行替代藥物評估。</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-white border border-[#E2E0D8]">
+                      <div class="font-bold text-[#7F1D1D]">2. 服藥期間及停藥後 1 個月內須避孕</div>
+                      <p class="text-[#64748B] mt-1 leading-relaxed">育齡婦女於服用 Warfarin 期間及最後一次給藥後 <strong>1 個月內</strong>，必須採取適當且可靠的避孕措施。</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-white border border-[#E2E0D8]">
+                      <div class="font-bold text-[#007A87]">3. 哺乳期間使用對嬰兒風險很小</div>
+                      <p class="text-[#64748B] mt-1 leading-relaxed">本藥品在哺乳期間使用時，對嬰兒的風險很小，但仍請於服藥前主動告知醫師或藥師評估。</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-white border border-[#E2E0D8]">
+                      <div class="font-bold text-[#2B2B2B]">4. 異常出血病史主動告知</div>
+                      <p class="text-[#64748B] mt-1 leading-relaxed">若過去曾有胃潰瘍、顱內出血或其他異常出血病史，請務必於開始服藥前主動告知主治醫師。</p>
+                    </div>
+                  </div>
+                `
+                    : ''
+                }
+              </div>
+
+              <!-- 日常生活安全與藥品保存 8 大守則 -->
+              <div class="space-y-2.5 pt-1">
+                ${buildAccordionHeader(
+                  'tab5Safety',
+                  '日常生活與藥品保存 8 大安全守則',
+                  '手術拔牙告知、軟毛牙刷、禁酒、避光乾燥保存',
+                  '4 大重點',
+                  'bg-[#EFECE6] text-[#2B2B2B]'
+                )}
+                ${
+                  showSafety
+                    ? `
+                  <div class="mobile-single-col grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
+                    <div class="p-3.5 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] space-y-1">
+                      <div class="font-bold text-[#2B2B2B]">1. 手術、拔牙或侵入性檢查前主動告知</div>
+                      <p class="text-[#64748B] leading-relaxed">讓所有照顧您的醫師、牙醫師及藥師知道您正在服用 Warfarin；拔牙或手術前須先諮詢是否需暫時停藥及何時恢復服藥。</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] space-y-1">
+                      <div class="font-bold text-[#2B2B2B]">2. 改用軟毛牙刷與電動刮鬍刀</div>
+                      <p class="text-[#64748B] leading-relaxed">日常生活小心碰撞避免受傷流血，刷牙建議選用軟毛牙刷、刮鬍鬚建議改用電動刮鬍刀，降低牙齦與皮膚割傷出血風險。</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] space-y-1">
+                      <div class="font-bold text-[#2B2B2B]">3. 避免飲酒與危險劇烈運動</div>
+                      <p class="text-[#64748B] leading-relaxed">請勿喝酒（酒精會干擾肝臟代謝藥品）；避免從事易碰撞或跌倒的劇烈運動，若發生嚴重跌倒或頭部撞擊請立即就醫。</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] space-y-1">
+                      <div class="font-bold text-[#2B2B2B]">4. 避光乾燥室溫保存・勿分贈他人</div>
+                      <p class="text-[#64748B] leading-relaxed">連同藥袋或原包裝存放於室溫、乾燥、避光處，並置於孩童無法取得之處；每人劑量不同，切勿將藥品分贈他人使用。</p>
+                    </div>
+                  </div>
+                `
+                    : ''
+                }
+              </div>
+            </section>
+
+            <!-- 區塊 B：可填寫、本機儲存、匯出圖檔／列印與雲端備份之「Warfarin 用藥紀錄卡」 -->
+            <section id="printable-med-card" class="bg-white border border-[#E2E0D8] rounded-2xl p-4 sm:p-6 space-y-5">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-[#E2E0D8]">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-0.5 rounded bg-[#7F1D1D] text-white text-xs font-bold">隨身必備</span>
+                    <h3 class="text-lg font-bold text-[#2B2B2B]">我正在服用抗凝血劑 Warfarin（個人用藥紀錄卡）</h3>
+                  </div>
+                  <p id="medcard-save-status" class="text-xs text-[#007A87] font-medium mt-1">
+                    資料自動儲存在您的裝置本機（免登入、無網路亦可隨時開啟檢視）
+                  </p>
+                </div>
+
+                <!-- 儲存與匯出操作按鈕群 -->
+                <div class="flex flex-wrap items-center gap-2 no-print">
+                  <button type="button" onclick="saveMedCardToLocal(true)" class="px-3 py-2 rounded-xl bg-[#007A87] hover:bg-[#00636E] text-white text-xs font-bold transition">
+                    儲存至本機
+                  </button>
+                  <button type="button" onclick="exportMedCardAsImage()" class="px-3 py-2 rounded-xl bg-[#7F1D1D] hover:bg-[#651515] text-white text-xs font-bold transition">
+                    下載隨身卡圖檔 (PNG)
+                  </button>
+                  <button type="button" onclick="window.print()" class="px-3 py-2 rounded-xl bg-white border border-[#E2E0D8] hover:bg-[#F7F6F2] text-[#2B2B2B] text-xs font-bold transition">
+                    列印／另存 PDF
+                  </button>
+                </div>
+              </div>
+
+              <!-- 個人與緊急聯絡人基本資料表單 -->
+              <div class="mobile-single-col grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
+                <div class="space-y-1">
+                  <label class="font-bold text-[#2B2B2B]">病人姓名</label>
+                  <input type="text" value="${escapeHtml(mc.patientName)}" oninput="updateMedCardField('patientName', this.value)" placeholder="請輸入姓名" class="w-full px-3 py-2 rounded-lg bg-[#F7F6F2] border border-[#E2E0D8] text-sm text-[#2B2B2B] focus:bg-white focus:border-[#7F1D1D] focus:outline-none" />
+                </div>
+                <div class="space-y-1">
+                  <label class="font-bold text-[#2B2B2B]">目前使用品項與規格</label>
+                  <input type="text" value="${escapeHtml(mc.tabletStrength)}" oninput="updateMedCardField('tabletStrength', this.value)" placeholder="例：可化凝錠 5mg" class="w-full px-3 py-2 rounded-lg bg-[#F7F6F2] border border-[#E2E0D8] text-sm text-[#2B2B2B] focus:bg-white focus:border-[#7F1D1D] focus:outline-none" />
+                </div>
+                <div class="space-y-1">
+                  <label class="font-bold text-[#007A87]">醫師設定之個人 INR 目標範圍</label>
+                  <input type="text" value="${escapeHtml(mc.targetInr)}" oninput="updateMedCardField('targetInr', this.value)" placeholder="例：2.0 - 3.0" class="w-full px-3 py-2 rounded-lg bg-[#E6F4F5]/50 border border-[#007A87]/30 text-sm font-bold text-[#007A87] focus:bg-white focus:border-[#007A87] focus:outline-none" />
+                </div>
+                <div class="space-y-1">
+                  <label class="font-bold text-[#2B2B2B]">緊急聯絡人／關係</label>
+                  <input type="text" value="${escapeHtml(mc.emergencyContact)}" oninput="updateMedCardField('emergencyContact', this.value)" placeholder="例：王小明（配偶）" class="w-full px-3 py-2 rounded-lg bg-[#F7F6F2] border border-[#E2E0D8] text-sm text-[#2B2B2B] focus:bg-white focus:border-[#7F1D1D] focus:outline-none" />
+                </div>
+                <div class="space-y-1">
+                  <label class="font-bold text-[#2B2B2B]">緊急聯絡人電話</label>
+                  <input type="tel" value="${escapeHtml(mc.emergencyPhone)}" oninput="updateMedCardField('emergencyPhone', this.value)" placeholder="例：0912-345-678" class="w-full px-3 py-2 rounded-lg bg-[#F7F6F2] border border-[#E2E0D8] text-sm text-[#2B2B2B] focus:bg-white focus:border-[#7F1D1D] focus:outline-none" />
+                </div>
+                <div class="space-y-1">
+                  <label class="font-bold text-[#2B2B2B]">就診醫院</label>
+                  <input type="text" value="${escapeHtml(mc.hospitalName)}" oninput="updateMedCardField('hospitalName', this.value)" class="w-full px-3 py-2 rounded-lg bg-[#F7F6F2] border border-[#E2E0D8] text-sm text-[#2B2B2B] focus:bg-white focus:border-[#7F1D1D] focus:outline-none" />
+                </div>
+                <div class="space-y-1">
+                  <label class="font-bold text-[#2B2B2B]">主治醫師</label>
+                  <input type="text" value="${escapeHtml(mc.doctorName)}" oninput="updateMedCardField('doctorName', this.value)" placeholder="請輸入醫師姓名" class="w-full px-3 py-2 rounded-lg bg-[#F7F6F2] border border-[#E2E0D8] text-sm text-[#2B2B2B] focus:bg-white focus:border-[#7F1D1D] focus:outline-none" />
+                </div>
+                <div class="space-y-1">
+                  <label class="font-bold text-[#2B2B2B]">負責藥師</label>
+                  <input type="text" value="${escapeHtml(mc.pharmacistName)}" oninput="updateMedCardField('pharmacistName', this.value)" placeholder="請輸入藥師姓名" class="w-full px-3 py-2 rounded-lg bg-[#F7F6F2] border border-[#E2E0D8] text-sm text-[#2B2B2B] focus:bg-white focus:border-[#7F1D1D] focus:outline-none" />
+                </div>
+                <div class="space-y-1">
+                  <label class="font-bold text-[#2B2B2B]">醫院藥物諮詢電話</label>
+                  <input type="text" value="${escapeHtml(mc.hospitalPhone)}" oninput="updateMedCardField('hospitalPhone', this.value)" class="w-full px-3 py-2 rounded-lg bg-[#F7F6F2] border border-[#E2E0D8] text-sm text-[#2B2B2B] focus:bg-white focus:border-[#7F1D1D] focus:outline-none" />
+                </div>
+              </div>
+
+              <!-- 週一至週日 劑量與 INR 紀錄表（響應式水平安全捲動，不破版） -->
+              <div class="space-y-2 pt-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-[#2B2B2B]">一週用藥劑量（顆數／mg）與回診抽血 INR 紀錄表</span>
+                  <button type="button" onclick="resetMedCardData()" class="text-xs underline text-[#64748B] hover:text-[#BE123C] no-print">
+                    清空本週紀錄
+                  </button>
+                </div>
+
+                <div class="overflow-x-auto border border-[#E2E0D8] rounded-xl">
+                  <table class="w-full min-w-[640px] text-xs border-collapse">
+                    <thead>
+                      <tr class="bg-[#EFECE6] text-[#2B2B2B] border-b border-[#E2E0D8]">
+                        <th class="p-2.5 text-left font-bold w-24 border-r border-[#E2E0D8]">紀錄項目</th>
+                        ${mc.weekRows
+                          .map(
+                            (r) => `
+                          <th class="p-2.5 text-center font-bold border-r last:border-r-0 border-[#E2E0D8]">${r.day}</th>
+                        `
+                          )
+                          .join('')}
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-[#E2E0D8]">
+                      <tr>
+                        <td class="p-2.5 font-bold text-[#7F1D1D] bg-[#F7F6F2] border-r border-[#E2E0D8]">日期</td>
+                        ${mc.weekRows
+                          .map(
+                            (r, idx) => `
+                          <td class="p-1.5 border-r last:border-r-0 border-[#E2E0D8]">
+                            <input type="text" value="${escapeHtml(r.date)}" oninput="updateMedCardWeekRow(${idx}, 'date', this.value)" placeholder="月/日" class="w-full text-center py-1.5 px-1 rounded bg-[#F7F6F2] focus:bg-white border border-transparent focus:border-[#7F1D1D] focus:outline-none" />
+                          </td>
+                        `
+                          )
+                          .join('')}
+                      </tr>
+                      <tr>
+                        <td class="p-2.5 font-bold text-[#7F1D1D] bg-[#F7F6F2] border-r border-[#E2E0D8]">服用劑量</td>
+                        ${mc.weekRows
+                          .map(
+                            (r, idx) => `
+                          <td class="p-1.5 border-r last:border-r-0 border-[#E2E0D8]">
+                            <input type="text" value="${escapeHtml(r.dose)}" oninput="updateMedCardWeekRow(${idx}, 'dose', this.value)" placeholder="例: 1顆" class="w-full text-center py-1.5 px-1 rounded bg-[#F7F6F2] focus:bg-white border border-transparent focus:border-[#7F1D1D] focus:outline-none" />
+                          </td>
+                        `
+                          )
+                          .join('')}
+                      </tr>
+                      <tr>
+                        <td class="p-2.5 font-bold text-[#007A87] bg-[#F7F6F2] border-r border-[#E2E0D8]">抽血 INR</td>
+                        ${mc.weekRows
+                          .map(
+                            (r, idx) => `
+                          <td class="p-1.5 border-r last:border-r-0 border-[#E2E0D8]">
+                            <input type="text" value="${escapeHtml(r.inr)}" oninput="updateMedCardWeekRow(${idx}, 'inr', this.value)" placeholder="數值" class="w-full text-center py-1.5 px-1 rounded bg-[#E6F4F5]/40 focus:bg-white border border-transparent focus:border-[#007A87] focus:outline-none font-bold text-[#007A87]" />
+                          </td>
+                        `
+                          )
+                          .join('')}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- 個人紀錄與筆記 -->
+              <div class="space-y-1.5">
+                <label class="block text-xs font-bold text-[#2B2B2B]">個人紀錄與回診筆記（例：醫師叮嚀、下次抽血日期、飲食變化紀錄）</label>
+                <textarea rows="2" oninput="updateMedCardField('notes', this.value)" placeholder="可在此記錄下次抽血時間、近期飲食或保健品諮詢備忘..." class="w-full p-3 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] text-xs sm:text-sm text-[#2B2B2B] focus:bg-white focus:border-[#7F1D1D] focus:outline-none">${escapeHtml(mc.notes)}</textarea>
+              </div>
+
+              <!-- 選配 Google Sheets 雲端備份同步區塊 -->
+              <div class="p-4 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8] space-y-2.5 no-print">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div class="text-xs font-bold text-[#2B2B2B]">選配功能：Google Sheets 個人雲端備份同步</div>
+                  <span id="gas-sync-time" class="text-[11px] text-[#64748B]">
+                    ${mc.lastSyncedAt ? `最近同步：${mc.lastSyncedAt}` : '尚未設定雲端網址（不設定亦可完整離線使用）'}
+                  </span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2">
+                  <input
+                    id="gas-webhook-input"
+                    type="url"
+                    value="${escapeHtml(mc.gasWebhookUrl)}"
+                    oninput="updateMedCardField('gasWebhookUrl', this.value)"
+                    placeholder="選填：貼上您的 Google Apps Script Web App 網址 (https://script.google.com/...)"
+                    class="flex-1 px-3 py-2 rounded-lg bg-white border border-[#E2E0D8] text-xs text-[#2B2B2B] focus:border-[#7F1D1D] focus:outline-none"
+                  />
+                  <button type="button" onclick="syncMedCardToGoogleSheets()" class="px-4 py-2 rounded-lg bg-[#2B2B2B] hover:bg-black text-white text-xs font-bold shrink-0 transition">
+                    立即同步備份
+                  </button>
+                </div>
+              </div>
+            </section>
+          </div>
+        ` + buildTabStepperFooter('tab5');
+      }
+    }
+
+    // --------------------------------------------------------------------------
+    // 3-B. 分頁底部「上一章 / 下一章」故事流串連導覽列
+    // --------------------------------------------------------------------------
+    function buildTabStepperFooter(currentTabId) {
+      const flowOrder = [
+        { id: 'overview', shortTitle: '首頁總覽' },
+        { id: 'tab1', shortTitle: '1. 認識藥品與錠劑' },
+        { id: 'tab2', shortTitle: '2. 忘記服藥（12小時法則）' },
+        { id: 'tab3', shortTitle: '3. 出血與栓塞危險訊號' },
+        { id: 'tab4', shortTitle: '4. 維生素 K 與交互作用' },
+        { id: 'tab5', shortTitle: '5. 生活安全與用藥紀錄卡' }
+      ];
+      const idx = flowOrder.findIndex((item) => item.id === currentTabId);
+      const prevItem = idx > 0 ? flowOrder[idx - 1] : null;
+      const nextItem = idx < flowOrder.length - 1 ? flowOrder[idx + 1] : { id: 'overview', shortTitle: '完成閱讀・回到首頁總覽' };
+
+      return `
+        <div class="mt-6 pt-4 border-t border-[#E2E0D8] flex flex-wrap items-center justify-between gap-3 no-print">
+          ${
+            prevItem
+              ? `<button type="button" onclick="switchTab('${prevItem.id}')" class="px-4 py-2.5 rounded-xl bg-white border border-[#E2E0D8] hover:border-[#7F1D1D] text-xs font-bold text-[#2B2B2B] transition">
+                  ‹ 上一頁：${prevItem.shortTitle}
+                </button>`
+              : '<div></div>'
+          }
+          <button type="button" onclick="switchTab('${nextItem.id}')" class="px-5 py-2.5 rounded-xl bg-[#7F1D1D] hover:bg-[#651515] text-white text-xs font-bold transition shadow-sm">
+            ${idx < flowOrder.length - 1 ? `繼續閱讀：${nextItem.shortTitle} ›` : `${nextItem.shortTitle} ✓`}
+          </button>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 4. 分頁切換與左側邊欄狀態同步
+    // --------------------------------------------------------------------------
+    function toggleBreadcrumbMenu(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById('breadcrumb-chapter-menu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    function selectFromBreadcrumb(tabId) {
+      const menu = document.getElementById('breadcrumb-chapter-menu');
+      if (menu) menu.classList.add('hidden');
+      switchTab(tabId);
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('breadcrumb-chapter-menu');
+      if (menu && !menu.classList.contains('hidden') && !menu.contains(e.target)) {
+        menu.classList.add('hidden');
+      }
+    });
+
+    function switchTab(tabId) {
+      APP_STATE.currentTab = tabId;
+      document.getElementById('breadcrumb-current').textContent = TAB_META[tabId]?.title || '總覽';
+
+      document.querySelectorAll('.nav-tab-btn').forEach((btn) => {
+        const isActive = btn.getAttribute('data-tab') === tabId;
+        const iconWrap = btn.querySelector('.tab-icon-wrap');
+        if (isActive) {
+          btn.classList.add('bg-white', 'border-[#7F1D1D]', 'text-[#7F1D1D]');
+          btn.classList.remove('border-transparent', 'text-[#2B2B2B]');
+          if (iconWrap) {
+            iconWrap.classList.add('bg-[#7F1D1D]', 'text-white', 'border-[#7F1D1D]');
+            iconWrap.classList.remove('bg-white', 'text-[#2B2B2B]', 'border-[#E2E0D8]');
+          }
+        } else {
+          btn.classList.remove('bg-white', 'border-[#7F1D1D]', 'text-[#7F1D1D]');
+          btn.classList.add('border-transparent', 'text-[#2B2B2B]');
+          if (iconWrap) {
+            iconWrap.classList.remove('bg-[#7F1D1D]', 'text-white', 'border-[#7F1D1D]');
+            iconWrap.classList.add('bg-white', 'text-[#2B2B2B]', 'border-[#E2E0D8]');
+          }
+        }
+      });
+
+      // 同步更新手機版底部 5 分頁導覽列高亮狀態
+      document.querySelectorAll('.mobile-bottom-btn').forEach((btn) => {
+        const isActive = btn.getAttribute('data-bottom-tab') === tabId;
+        if (isActive) {
+          btn.classList.add('text-[#7F1D1D]', 'font-bold', 'bg-[#F7F6F2]');
+          btn.classList.remove('text-[#64748B]');
+        } else {
+          btn.classList.remove('text-[#7F1D1D]', 'font-bold', 'bg-[#F7F6F2]');
+          btn.classList.add('text-[#64748B]');
+        }
+      });
+
+      renderTabContent(tabId);
+      closeMobileDrawer();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --------------------------------------------------------------------------
+    // 5. 跨模組即時關鍵字搜尋（側邊欄搜尋框）
+    // --------------------------------------------------------------------------
+    function handleGlobalSearch(rawQuery) {
+      const query = rawQuery.trim().toLowerCase();
+      const resultsBox = document.getElementById('search-results-box');
+      const clearBtn = document.getElementById('clear-search-btn');
+      const searchIcon = document.getElementById('search-icon');
+
+      if (!query) {
+        resultsBox.classList.add('hidden');
+        resultsBox.innerHTML = '';
+        clearBtn.classList.add('hidden');
+        searchIcon.classList.remove('hidden');
+        return;
+      }
+
+      clearBtn.classList.remove('hidden');
+      searchIcon.classList.add('hidden');
+
+      const matched = QUICK_SEARCH_INDEX.filter(
+        (item) => item.keyword.toLowerCase().includes(query) || item.title.toLowerCase().includes(query)
+      );
+
+      resultsBox.classList.remove('hidden');
+      if (matched.length === 0) {
+        resultsBox.innerHTML = `
+          <div class="p-2.5 text-xs text-[#64748B] bg-[#F7F6F2] rounded-lg">
+            找不到「${escapeHtml(rawQuery)}」的直接條目，可前往<strong>分頁 4 維生素 K 與交互作用</strong>查看完整清單，或電洽諮詢專線。
+          </div>
+        `;
+        return;
+      }
+
+      resultsBox.innerHTML = matched
+        .map((item) => {
+          const badgeStyle =
+            item.badgeColor === 'crimson'
+              ? 'bg-[#FFF1F2] text-[#BE123C]'
+              : item.badgeColor === 'burgundy'
+              ? 'bg-[#7F1D1D]/10 text-[#7F1D1D]'
+              : 'bg-[#E6F4F5] text-[#007A87]';
+          return `
+            <button onclick="jumpFromSearch('${item.tab}', '${escapeHtml(rawQuery)}')" class="w-full text-left p-2.5 rounded-lg hover:bg-[#F7F6F2] border border-transparent hover:border-[#E2E0D8] transition flex flex-col gap-1">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded ${badgeStyle}">${item.badge}</span>
+                <span class="text-[11px] text-[#64748B]">前往查看 ›</span>
+              </div>
+              <div class="text-xs font-medium text-[#2B2B2B] leading-snug">${item.title}</div>
+            </button>
+          `;
+        })
+        .join('');
+    }
+
+    function jumpFromSearch(tabId, queryText) {
+      if (tabId === 'tab4') {
+        APP_STATE.dietSearchQuery = queryText;
+        APP_STATE.dietFilterCategory = 'all';
+      }
+      switchTab(tabId);
+      showToast(`已為您跳轉至「${TAB_META[tabId].title}」`);
+    }
+
+    function clearGlobalSearch() {
+      const input = document.getElementById('sidebar-search-input');
+      input.value = '';
+      handleGlobalSearch('');
+      input.focus();
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+    }
+
+    // --------------------------------------------------------------------------
+    // 6. 長輩大字級切換（A 標準 / A+ 長輩大字）
+    // --------------------------------------------------------------------------
+    function setFontScale(scale) {
+      APP_STATE.fontScale = scale;
+      localStorage.setItem('warfarin_font_scale', scale);
+      const htmlEl = document.documentElement;
+      const normalBtn = document.getElementById('font-normal-btn');
+      const largeBtn = document.getElementById('font-large-btn');
+
+      if (scale === 'large') {
+        htmlEl.classList.remove('text-[16px]');
+        htmlEl.classList.add('text-[19px]');
+        largeBtn.classList.add('bg-white', 'text-[#7F1D1D]');
+        largeBtn.classList.remove('text-white/90');
+        normalBtn.classList.remove('bg-white', 'text-[#7F1D1D]');
+        normalBtn.classList.add('text-white/90');
+        showToast('已切換為「A+ 長輩大字級」模式');
+      } else {
+        htmlEl.classList.remove('text-[19px]');
+        htmlEl.classList.add('text-[16px]');
+        normalBtn.classList.add('bg-white', 'text-[#7F1D1D]');
+        normalBtn.classList.remove('text-white/90');
+        largeBtn.classList.remove('bg-white', 'text-[#7F1D1D]');
+        largeBtn.classList.add('text-white/90');
+      }
+    }
+
+    // --------------------------------------------------------------------------
+    // 7. 手動切換電腦版 / 手機版預覽模式與手機抽屜控制
+    // --------------------------------------------------------------------------
+    function setViewportMode(mode) {
+      APP_STATE.viewportMode = mode;
+      const shell = document.getElementById('app-shell');
+      const workspace = document.getElementById('workspace-grid');
+      const sidebar = document.getElementById('left-sidebar');
+      const mobileBtn = document.getElementById('mobile-drawer-btn');
+      const bottomNav = document.getElementById('mobile-bottom-nav');
+
+      document.querySelectorAll('.view-btn').forEach((btn) => {
+        if (btn.getAttribute('data-view') === mode) {
+          btn.classList.add('bg-white', 'text-[#7F1D1D]');
+          btn.classList.remove('text-white/90');
+        } else {
+          btn.classList.remove('bg-white', 'text-[#7F1D1D]');
+          btn.classList.add('text-white/90');
+        }
+      });
+
+      if (mode === 'mobile') {
+        shell.classList.add('mobile-preview-frame');
+        workspace.classList.remove('lg:flex-row');
+        sidebar.classList.remove('lg:w-80');
+        sidebar.classList.add('hidden');
+        mobileBtn.classList.remove('lg:hidden');
+        if (bottomNav) bottomNav.classList.remove('md:hidden');
+        renderTabContent(APP_STATE.currentTab);
+        showToast('已切換為「手機版單欄折疊＋底部導覽視圖」');
+      } else {
+        shell.classList.remove('mobile-preview-frame');
+        workspace.classList.add('lg:flex-row');
+        sidebar.classList.add('lg:w-80');
+        sidebar.classList.remove('hidden', 'fixed', 'inset-y-0', 'left-0', 'w-80', 'shadow-2xl');
+        mobileBtn.classList.add('lg:hidden');
+        if (bottomNav) bottomNav.classList.add('md:hidden');
+        document.getElementById('drawer-backdrop').classList.add('hidden');
+        renderTabContent(APP_STATE.currentTab);
+        if (mode === 'desktop') {
+          showToast('已鎖定為「電腦版雙欄視圖」');
+        }
+      }
+    }
+
+    function toggleMobileDrawer() {
+      const sidebar = document.getElementById('left-sidebar');
+      const backdrop = document.getElementById('drawer-backdrop');
+
+      if (APP_STATE.viewportMode === 'mobile' || window.innerWidth < 1024) {
+        if (!APP_STATE.drawerOpen) {
+          APP_STATE.drawerOpen = true;
+          sidebar.classList.remove('hidden', 'lg:flex');
+          sidebar.classList.add('fixed', 'inset-y-0', 'left-0', 'w-80', 'flex', 'overflow-y-auto', 'shadow-2xl');
+          backdrop.classList.remove('hidden');
+        } else {
+          closeMobileDrawer();
+        }
+      }
+    }
+
+    function closeMobileDrawer() {
+      APP_STATE.drawerOpen = false;
+      const sidebar = document.getElementById('left-sidebar');
+      const backdrop = document.getElementById('drawer-backdrop');
+      backdrop.classList.add('hidden');
+
+      if (APP_STATE.viewportMode === 'mobile') {
+        sidebar.classList.add('hidden');
+        sidebar.classList.remove('fixed', 'inset-y-0', 'left-0', 'w-80', 'flex', 'overflow-y-auto', 'shadow-2xl');
+      } else if (window.innerWidth < 1024) {
+        sidebar.classList.add('hidden', 'lg:flex');
+        sidebar.classList.remove('fixed', 'inset-y-0', 'left-0', 'w-80', 'flex', 'overflow-y-auto', 'shadow-2xl');
+      }
+    }
+
+    // --------------------------------------------------------------------------
+    // 8. 衛教影片與出處資訊彈窗 + 自訂 Toast 提示（取代 alert）
+    // --------------------------------------------------------------------------
+    function openResourceModal(type) {
+      const modal = document.getElementById('resource-modal');
+      const title = document.getElementById('modal-title');
+      const body = document.getElementById('modal-body');
+
+      if (type === 'videos') {
+        title.textContent = '亞東醫院「藥找查」線上衛教影片與完整手冊';
+        body.innerHTML = `
+          <p class="text-[#64748B]">以下資源同步收錄自亞東紀念醫院藥學部《可化凝錠 Warfarin 用藥指導單（編號 105）》：</p>
+          <div class="space-y-2.5">
+            <a href="http://www.e-pharm.info" target="_blank" rel="noopener noreferrer" class="block p-3.5 rounded-xl border border-[#E2E0D8] hover:border-[#7F1D1D] bg-[#F7F6F2] transition">
+              <div class="font-bold text-[#7F1D1D]">1. 線上衛教影片：飲食篇</div>
+              <div class="text-xs text-[#64748B] mt-0.5">認識維生素 K 食物定量攝取原則與常見飲食交互作用（前往藥學部網站查詢）</div>
+            </a>
+            <a href="http://www.e-pharm.info" target="_blank" rel="noopener noreferrer" class="block p-3.5 rounded-xl border border-[#E2E0D8] hover:border-[#7F1D1D] bg-[#F7F6F2] transition">
+              <div class="font-bold text-[#7F1D1D]">2. 線上衛教影片：副作用篇</div>
+              <div class="text-xs text-[#64748B] mt-0.5">認識出血與血栓危險訊號及緊急就醫時機（前往藥學部網站查詢）</div>
+            </a>
+            <a href="http://www.e-pharm.info" target="_blank" rel="noopener noreferrer" class="block p-3.5 rounded-xl border border-[#E2E0D8] hover:border-[#007A87] bg-[#E6F4F5]/50 transition">
+              <div class="font-bold text-[#007A87]">3. 完整衛教本（含常見食物維生素 K 含量一覽表）</div>
+              <div class="text-xs text-[#64748B] mt-0.5">本網頁「分頁 4 維生素 K 與交互作用」已完整內建該份飲食含量與中草藥對照資料</div>
+            </a>
+          </div>
+        `;
+      } else {
+        title.textContent = '衛教資料出處與版權聲明';
+        body.innerHTML = `
+          <div class="space-y-2.5 text-xs leading-relaxed">
+            <div class="p-3 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8]">
+              <div class="font-bold text-[#2B2B2B]">1. 亞東紀念醫院藥學部「藥找查」用藥指導單</div>
+              <p class="text-[#64748B] mt-1">編號 105｜全院編碼：亞東醫院出版品 SH209｜編印日期：2026 年 02 月 02 日 第九版｜諮詢專線：(02)8966-7000 轉分機 2123｜網址：http://www.e-pharm.info</p>
+            </div>
+            <div class="p-3 rounded-xl bg-[#F7F6F2] border border-[#E2E0D8]">
+              <div class="font-bold text-[#2B2B2B]">2. 社團法人臺灣臨床藥學會《抗凝血藥品 Warfarin 用藥教育手冊（第一版）》</div>
+              <p class="text-[#64748B] mt-1">發行人：張豫立｜編著：王詩涵、林明燊、孫意惟、蘇姵伃｜審定：吳家瑋、吳建志、呂怡萱、林毓雯、康皓程、張惠雯、陳寬軒｜出版日期：中華民國 114 年 02 月</p>
+            </div>
+          </div>
+        `;
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeResourceModal() {
+      const modal = document.getElementById('resource-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function showToast(message) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'bg-[#2B2B2B] text-white text-xs font-medium px-4 py-2.5 rounded-xl border border-white/15 shadow-lg transition-opacity duration-300';
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 2400);
+    }
+
+    // --------------------------------------------------------------------------
+    // 9. 離線狀態監聽與初始化載入
+    // --------------------------------------------------------------------------
+    function updateNetworkIndicator() {
+      const dot = document.getElementById('offline-dot');
+      const text = document.getElementById('offline-text');
+      if (navigator.onLine) {
+        dot.className = 'w-2 h-2 rounded-full bg-emerald-300';
+        text.textContent = '離線快取就緒';
+      } else {
+        dot.className = 'w-2 h-2 rounded-full bg-amber-300';
+        text.textContent = '離線模式運行中';
+      }
+    }
+
+    window.addEventListener('online', updateNetworkIndicator);
+    window.addEventListener('offline', updateNetworkIndicator);
+    window.addEventListener('resize', () => {
+      const sidebar = document.getElementById('left-sidebar');
+      if (APP_STATE.viewportMode !== 'mobile' && window.innerWidth >= 1024) {
+        sidebar.classList.remove('hidden', 'fixed', 'inset-y-0', 'left-0', 'w-80', 'flex', 'overflow-y-auto', 'shadow-2xl');
+        document.getElementById('drawer-backdrop').classList.add('hidden');
+      } else if (window.innerWidth < 1024 && !APP_STATE.drawerOpen) {
+        sidebar.classList.add('hidden');
+      }
+    });
+
+    // --------------------------------------------------------------------------
+    // 10. 離線快取 Service Worker 註冊（確保弱網與斷網環境仍可完整瀏覽與試算）
+    // --------------------------------------------------------------------------
+    function registerOfflineCacheWorker() {
+      try {
+        if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.protocol === 'http:')) {
+          const swCode = `
+            const CACHE_NAME = 'warfarin-edu-v1';
+            self.addEventListener('install', (event) => {
+              self.skipWaiting();
+            });
+            self.addEventListener('activate', (event) => {
+              event.waitUntil(self.clients.claim());
+            });
+            self.addEventListener('fetch', (event) => {
+              if (event.request.method !== 'GET') return;
+              event.respondWith(
+                caches.open(CACHE_NAME).then((cache) =>
+                  cache.match(event.request).then((cached) => {
+                    const fetchPromise = fetch(event.request)
+                      .then((networkResponse) => {
+                        if (networkResponse && networkResponse.status === 200) {
+                          cache.put(event.request, networkResponse.clone());
+                        }
+                        return networkResponse;
+                      })
+                      .catch(() => cached);
+                    return cached || fetchPromise;
+                  })
+                )
+              );
+            });
+          `;
+          const blob = new Blob([swCode], { type: 'application/javascript' });
+          const swUrl = URL.createObjectURL(blob);
+          navigator.serviceWorker.register(swUrl).catch(() => {});
+        }
+      } catch (e) {
+        // 沙盒環境不支援 Blob SW 時自動降級為 LocalStorage 離線資料模式
+      }
+    }
+
+    window.onload = function () {
+      if (APP_STATE.fontScale === 'large') {
+        setFontScale('large');
+      }
+      if (window.innerWidth < 1024) {
+        document.getElementById('left-sidebar').classList.add('hidden');
+      }
+      updateNetworkIndicator();
+      registerOfflineCacheWorker();
+      switchTab('overview');
+    };
+  </script>
+</body>
+</html>
